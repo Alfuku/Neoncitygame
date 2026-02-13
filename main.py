@@ -1,20 +1,31 @@
 import os
 import random
 from datetime import datetime
+
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from sqlalchemy import create_engine, Column, Integer, String, Float, DateTime, ForeignKey, Text, Boolean
+
+from sqlalchemy import (
+    create_engine, Column, Integer, String, Float, DateTime,
+    ForeignKey, Boolean
+)
 from sqlalchemy.orm import sessionmaker, declarative_base, Session, relationship
+
 from passlib.context import CryptContext
 
 # ---------- CONFIG ----------
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:////tmp/city.db")
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL is not set in Render Environment Variables")
+
+# Render sometimes gives postgres://; SQLAlchemy prefers postgresql://
+DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 # ---------- DATABASE ----------
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+    pool_pre_ping=True,
 )
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 Base = declarative_base()
@@ -49,11 +60,13 @@ class PlayerDB(Base):
 
     wins = Column(Integer, default=0)
     losses = Column(Integer, default=0)
-
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    inventory = relationship("InventoryDB", back_populates="player", cascade="all, delete-orphan")
-
+    inventory = relationship(
+        "InventoryDB",
+        back_populates="player",
+        cascade="all, delete-orphan"
+    )
 
 class InventoryDB(Base):
     __tablename__ = "inventory"
@@ -65,7 +78,6 @@ class InventoryDB(Base):
     equipped = Column(Boolean, default=True)
 
     player = relationship("PlayerDB", back_populates="inventory")
-
 
 Base.metadata.create_all(bind=engine)
 
@@ -116,13 +128,13 @@ class Action(BaseModel):
 class BuyItem(BaseModel):
     username: str
     item_id: str
-    item_type: str
+    item_type: str  # "weapon" or "armor"
 
 # ---------- HELPERS ----------
-def get_player(username: str, db: Session):
+def get_player(username: str, db: Session) -> PlayerDB:
     player = db.query(PlayerDB).filter(PlayerDB.username == username).first()
     if not player:
-        raise HTTPException(404, "Player not found")
+        raise HTTPException(status_code=404, detail="Player not found")
     return player
 
 def add_exp(player: PlayerDB, amount: int):
@@ -133,6 +145,10 @@ def add_exp(player: PlayerDB, amount: int):
         player.max_energy += 10
 
 # ---------- ROUTES ----------
+@app.get("/health")
+def health():
+    return {"ok": True}
+
 @app.get("/")
 def root():
     return {"status": "City of Syndicates API LIVE"}
@@ -140,12 +156,9 @@ def root():
 @app.post("/register")
 def register(player: PlayerCreate, db: Session = Depends(get_db)):
     if db.query(PlayerDB).filter(PlayerDB.username == player.username).first():
-        raise HTTPException(400, "Username taken")
+        raise HTTPException(status_code=400, detail="Username taken")
 
-    new_player = PlayerDB(
-        username=player.username,
-        password=hash_password(player.password)
-    )
+    new_player = PlayerDB(username=player.username, password=hash_password(player.password))
     db.add(new_player)
     db.commit()
     db.refresh(new_player)
@@ -159,16 +172,16 @@ def register(player: PlayerCreate, db: Session = Depends(get_db)):
 def login(player: PlayerLogin, db: Session = Depends(get_db)):
     user = get_player(player.username, db)
     if not verify_password(player.password, user.password):
-        raise HTTPException(400, "Invalid credentials")
+        raise HTTPException(status_code=400, detail="Invalid credentials")
     return {"message": "Login successful", "username": user.username}
 
 @app.post("/crime")
 def crime(action: Action, db: Session = Depends(get_db)):
     user = get_player(action.username, db)
-    crime = random.choice(CRIMES)
 
+    crime = random.choice(CRIMES)
     if user.energy < crime["energy"]:
-        raise HTTPException(400, "Not enough energy")
+        raise HTTPException(status_code=400, detail="Not enough energy")
 
     user.energy -= crime["energy"]
 
@@ -179,10 +192,10 @@ def crime(action: Action, db: Session = Depends(get_db)):
         add_exp(user, crime["exp"])
         db.commit()
         return {"result": "SUCCESS", "reward": reward}
-    else:
-        user.losses += 1
-        db.commit()
-        return {"result": "FAILED"}
+
+    user.losses += 1
+    db.commit()
+    return {"result": "FAILED"}
 
 @app.post("/rest")
 def rest(action: Action, db: Session = Depends(get_db)):
@@ -201,10 +214,10 @@ def buy_item(data: BuyItem, db: Session = Depends(get_db)):
 
     item = WEAPONS.get(data.item_id) if data.item_type == "weapon" else ARMOR.get(data.item_id)
     if not item:
-        raise HTTPException(404, "Item not found")
+        raise HTTPException(status_code=404, detail="Item not found")
 
     if player.money < item["price"]:
-        raise HTTPException(400, "Not enough money")
+        raise HTTPException(status_code=400, detail="Not enough money")
 
     player.money -= item["price"]
 
@@ -214,7 +227,12 @@ def buy_item(data: BuyItem, db: Session = Depends(get_db)):
         InventoryDB.item_type == data.item_type
     ).update({"equipped": False})
 
-    db.add(InventoryDB(player_id=player.id, item_type=data.item_type, item_id=data.item_id, equipped=True))
-    db.commit()
+    db.add(InventoryDB(
+        player_id=player.id,
+        item_type=data.item_type,
+        item_id=data.item_id,
+        equipped=True
+    ))
 
+    db.commit()
     return {"message": f"Bought {item['name']}"}
