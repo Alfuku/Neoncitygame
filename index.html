@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>City of Syndicates</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: monospace;
+      background: #111;
+      color: #0f0;
+      padding: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #f00;
+    }
+
+    .box {
+      background: #1b1b1b;
+      border: 1px solid #333;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+    }
+
+    input, button, select {
+      width: 100%;
+      margin: 6px 0;
+      padding: 10px;
+      font-size: 14px;
+      background: #000;
+      color: #0f0;
+      border: 1px solid #333;
+    }
+
+    button {
+      background: #222;
+      color: #fff;
+    }
+
+    #log {
+      background: #000;
+      border: 1px solid #333;
+      min-height: 120px;
+      padding: 10px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🏙️ City of Syndicates</h1>
+
+<div class="box">
+  <input id="user" placeholder="Username">
+  <input id="pass" type="password" placeholder="Password">
+  <button onclick="register()">Register</button>
+  <button onclick="login()">Login</button>
+</div>
+
+<div class="box">
+  <button onclick="crime()">Commit Crime</button>
+  <button onclick="rest()">Rest</button>
+</div>
+
+<div class="box">
+  <input id="itemId" placeholder="Item ID (pistol)">
+  <select id="itemType">
+    <option value="weapon">Weapon</option>
+    <option value="armor">Armor</option>
+  </select>
+  <button onclick="buy()">Buy Item</button>
+</div>
+
+<div class="box">
+  <pre id="log">Welcome to the city…</pre>
+</div>
+
+<script>
+const API = "https://city-of-syndicates-1.onrender.com";
+
+let currentUser = null;
+
+function show(data) {
+  const log = document.getElementById("log");
+  log.textContent = JSON.stringify(data, null, 2);
+  log.scrollTop = log.scrollHeight;
+}
+
+async function post(path, body) {
+  try {
+    const r = await fetch(API + path, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(body)
+    });
+    return await r.json();
+  } catch {
+    return {error: "Server unreachable"};
+  }
+}
+
+async function register() {
+  show(await post("/register", {
+    username: user.value,
+    password: pass.value
+  }));
+}
+
+async function login() {
+  const res = await post("/login", {
+    username: user.value,
+    password: pass.value
+  });
+  if (!res.error) currentUser = res.username;
+  show(res);
+}
+
+async function crime() {
+  if (!currentUser) return show({error: "Login first"});
+  show(await post("/crime", {username: currentUser}));
+}
+
+async function rest() {
+  if (!currentUser) return show({error: "Login first"});
+  show(await post("/rest", {username: currentUser}));
+}
+
+async function buy() {
+  if (!currentUser) return show({error: "Login first"});
+  show(await post("/armory/buy", {
+    username: currentUser,
+    item_id: itemId.value,
+    item_type: itemType.value
+  }));
+}
+</script>
+
+</body>
+</html>
