@@ -96,6 +96,9 @@ class InventoryDB(Base):
 
 
 Base.metadata.create_all(bind=engine)
+# TEMP: Reset tables (remove after first successful run)
+Base.metadata.drop_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 # =========================
 # GAME DATA
@@ -415,3 +418,4 @@ def leaderboard(limit: int = 20, db: Session = Depends(get_db)):
     ).limit(limit).all()
 
     return {"leaders": [player_public(p) for p in players]}
+
