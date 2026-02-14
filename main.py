@@ -244,6 +244,7 @@ class CasinoLedgerDB(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 
@@ -1265,3 +1266,4 @@ def admin_reset_player(data: AdminResetIn, db: Session = Depends(get_db)):
     ensure_player_quests(p, db)
 
     return {"message": "Player reset", "player": player_public(p), "avatar": avatar_snapshot(p)}
+
