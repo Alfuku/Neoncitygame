@@ -1,14 +1,9 @@
-
-# Creating the comprehensive enhanced frontend with all new features
-
-enhanced_v2_html = '''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>City of Syndicates | Neon City RPG</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -18,25 +13,20 @@ enhanced_v2_html = '''<!DOCTYPE html>
       --neon-red: #ff0040;
       --neon-yellow: #ffff00;
       --neon-purple: #bf00ff;
-      --neon-orange: #ff8000;
       --dark-bg: #0a0a0f;
       --panel-bg: rgba(20, 20, 30, 0.9);
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       font-family: 'Rajdhani', monospace;
       background: var(--dark-bg);
       color: #e0e0e0;
       min-height: 100vh;
-      overflow-x: hidden;
       background-image: 
         linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
       background-size: 50px 50px;
     }
-
     .grid-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -45,1008 +35,119 @@ enhanced_v2_html = '''<!DOCTYPE html>
       animation: scanline 8s linear infinite;
       z-index: -1;
     }
-
     @keyframes scanline {
       0% { transform: translateY(-100%); }
       100% { transform: translateY(100%); }
     }
-
-    /* Header */
     .header {
       text-align: center;
       padding: 20px;
       border-bottom: 2px solid var(--neon-cyan);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
       background: rgba(0, 0, 0, 0.8);
-      position: relative;
-      overflow: hidden;
     }
-
-    .header::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
-      animation: shimmer 3s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { left: -100%; }
-      100% { left: 100%; }
-    }
-
     .header h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink), var(--neon-cyan));
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: gradient 3s ease infinite;
-    }
-
-    @keyframes gradient {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    .subtitle {
-      color: var(--neon-green);
-      font-size: 0.9rem;
-      letter-spacing: 2px;
-      margin-top: 5px;
-    }
-
-    /* Tab Banner */
-    .tab-banner {
-      width: 100%;
-      height: 200px;
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      border-bottom: 2px solid var(--neon-cyan);
-      transition: background-image 0.5s ease;
-      overflow: hidden;
-    }
-
-    .tab-banner::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 100px;
-      background: linear-gradient(to top, var(--dark-bg), transparent);
-    }
-
-    .tab-banner-content {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      z-index: 2;
       font-family: 'Orbitron', sans-serif;
       font-size: 2rem;
       text-transform: uppercase;
-      letter-spacing: 3px;
-      text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+      letter-spacing: 4px;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-
-    .banner-dashboard { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1200'); }
-    .banner-crimes { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1200'); }
-    .banner-jobs { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200'); }
-    .banner-training { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200'); }
-    .banner-armory { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=1200'); }
-    .banner-pvp { background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200'); }
-    .banner-casino { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1596832846873-7f62a52c414a?w=1200'); }
-    .banner-character { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200'); }
-    .banner-market { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200'); }
-    .banner-stocks { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1611974765270-ca1258634369?w=1200'); }
-    .banner-quests { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200'); }
-
-    /* Main Layout */
+    .tab-banner {
+      width: 100%;
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 2px solid var(--neon-cyan);
+    }
+    .banner-dashboard { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800'); }
+    .banner-crimes { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800'); }
     .container {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 20px;
+      padding: 10px;
     }
-
-    @media (max-width: 1000px) {
-      .container { grid-template-columns: 1fr; }
-      .tab-banner { height: 150px; }
-    }
-
-    /* Panels */
     .panel {
       background: var(--panel-bg);
       border: 1px solid rgba(0, 255, 255, 0.3);
       border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 255, 255, 0.05);
-      position: relative;
-      overflow: hidden;
+      padding: 15px;
+      margin-bottom: 15px;
     }
-
-    .panel::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
-    }
-
     .panel-title {
       font-family: 'Orbitron', sans-serif;
       color: var(--neon-cyan);
-      font-size: 1.1rem;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .panel-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--neon-cyan), transparent);
-    }
-
-    /* Character Model */
-    .character-model {
-      width: 100%;
-      height: 300px;
-      background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
-      border: 2px solid var(--neon-cyan);
-      border-radius: 10px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 15px;
-    }
-
-    .character-silhouette {
-      width: 120px;
-      height: 200px;
-      position: relative;
-      filter: drop-shadow(0 0 20px var(--neon-cyan));
-      transition: all 0.3s;
-    }
-
-    .char-head {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-      border-radius: 50%;
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      box-shadow: 0 0 20px var(--neon-cyan);
-    }
-
-    .char-body {
-      width: 80px;
-      height: 100px;
-      background: linear-gradient(180deg, var(--neon-purple), var(--neon-pink));
-      position: absolute;
-      top: 45px;
-      left: 50%;
-      transform: translateX(-50%);
-      clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
-      box-shadow: 0 0 30px var(--neon-purple);
-    }
-
-    .char-arm-left, .char-arm-right {
-      width: 20px;
-      height: 80px;
-      background: linear-gradient(180deg, var(--neon-cyan), var(--neon-green));
-      position: absolute;
-      top: 50px;
-      border-radius: 10px;
-    }
-
-    .char-arm-left { left: 10px; transform: rotate(20deg); }
-    .char-arm-right { right: 10px; transform: rotate(-20deg); }
-
-    .char-leg-left, .char-leg-right {
-      width: 25px;
-      height: 70px;
-      background: linear-gradient(180deg, #333, #111);
-      position: absolute;
-      bottom: 0;
-      border-radius: 0 0 10px 10px;
-    }
-
-    .char-leg-left { left: 25px; }
-    .char-leg-right { right: 25px; }
-
-    .char-weapon {
-      position: absolute;
-      right: -20px;
-      top: 60px;
-      font-size: 2rem;
-      filter: drop-shadow(0 0 10px var(--neon-red));
-      animation: float 2s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-
-    .character-stats-overlay {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-      background: rgba(0, 0, 0, 0.8);
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid var(--neon-cyan);
-    }
-
-    .equipped-items {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .equip-slot {
-      width: 40px;
-      height: 40px;
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(0, 255, 255, 0.3);
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      position: relative;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .equip-slot:hover {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-    }
-
-    .equip-slot.filled {
-      border-color: var(--neon-green);
-      box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-    }
-
-    .equip-slot::after {
-      content: attr(data-slot);
-      position: absolute;
-      bottom: -15px;
-      font-size: 0.6rem;
-      color: #666;
-      text-transform: uppercase;
-    }
-
-    /* PvP Arena */
-    .pvp-arena {
-      background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(0, 0, 0, 0.9));
-      border: 2px solid var(--neon-red);
-      border-radius: 15px;
-      padding: 30px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .pvp-arena::before {
-      content: '⚔️ COMBAT ZONE ⚔️';
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Orbitron', sans-serif;
-      color: var(--neon-red);
-      font-size: 0.9rem;
-      letter-spacing: 3px;
-    }
-
-    .combat-stage {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 40px 0;
-      position: relative;
-    }
-
-    .combatant {
-      text-align: center;
-      flex: 1;
-    }
-
-    .combatant-avatar {
-      width: 100px;
-      height: 100px;
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-      border-radius: 50%;
-      margin: 0 auto 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-      position: relative;
-      border: 3px solid var(--neon-cyan);
-      transition: all 0.3s;
-    }
-
-    .combatant-avatar.enemy {
-      background: linear-gradient(135deg, var(--neon-red), var(--neon-pink));
-      border-color: var(--neon-red);
-      box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
-    }
-
-    .combatant-avatar.damaged {
-      animation: shake 0.5s, flashRed 0.5s;
-    }
-
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-10px); }
-      75% { transform: translateX(10px); }
-    }
-
-    @keyframes flashRed {
-      0%, 100% { filter: brightness(1); }
-      50% { filter: brightness(2) sepia(1) hue-rotate(-50deg) saturate(5); }
-    }
-
-    .combatant-name {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.2rem;
-      margin-bottom: 5px;
-    }
-
-    .combatant-hp {
-      width: 150px;
-      height: 20px;
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid #333;
-      border-radius: 10px;
-      overflow: hidden;
-      margin: 0 auto;
-    }
-
-    .combatant-hp-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--neon-green), #00ff00);
-      transition: width 0.5s ease;
-      box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
-    }
-
-    .combatant-hp-fill.low {
-      background: linear-gradient(90deg, var(--neon-red), #ff0000);
-      box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-    }
-
-    .vs-indicator {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      color: var(--neon-yellow);
-      text-shadow: 0 0 20px var(--neon-yellow);
-      animation: pulse 1s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-
-    .combat-log {
-      background: rgba(0, 0, 0, 0.8);
-      border: 1px solid var(--neon-red);
-      border-radius: 10px;
-      padding: 15px;
-      height: 150px;
-      overflow-y: auto;
-      font-family: 'Courier New', monospace;
-      margin-top: 20px;
-    }
-
-    .combat-entry {
-      margin-bottom: 8px;
-      padding: 5px;
-      border-left: 3px solid var(--neon-cyan);
-      padding-left: 10px;
-      animation: slideIn 0.3s ease;
-    }
-
-    .combat-entry.damage { border-left-color: var(--neon-red); }
-    .combat-entry.heal { border-left-color: var(--neon-green); }
-    .combat-entry.critical { 
-      border-left-color: var(--neon-yellow); 
-      background: rgba(255, 255, 0, 0.1);
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-20px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    .combat-controls {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .combat-btn {
-      padding: 15px 30px;
-      font-family: 'Orbitron', sans-serif;
       font-size: 1rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .combat-btn.attack {
-      background: linear-gradient(135deg, var(--neon-red), #ff4080);
-      color: white;
-      box-shadow: 0 0 20px rgba(255, 0, 64, 0.4);
-    }
-
-    .combat-btn.defend {
-      background: linear-gradient(135deg, var(--neon-cyan), #0080ff);
-      color: white;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-    }
-
-    .combat-btn:hover {
-      transform: translateY(-3px);
-      filter: brightness(1.2);
-    }
-
-    /* Damage Popup */
-    .damage-popup {
-      position: absolute;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      font-weight: bold;
-      color: var(--neon-red);
-      text-shadow: 0 0 20px var(--neon-red);
-      pointer-events: none;
-      animation: damageFloat 1s ease-out forwards;
-      z-index: 100;
-    }
-
-    @keyframes damageFloat {
-      0% { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(-50px) scale(1.5); }
-    }
-
-    .damage-popup.critical {
-      color: var(--neon-yellow);
-      font-size: 3rem;
-    }
-
-    /* Stock Market Styles */
-    .stock-ticker {
-      background: rgba(0, 0, 0, 0.8);
-      border: 1px solid var(--neon-green);
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-
-    .ticker-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid rgba(0, 255, 65, 0.3);
-    }
-
-    .ticker-title {
-      font-family: 'Orbitron', sans-serif;
-      color: var(--neon-green);
-      font-size: 1.2rem;
-    }
-
-    .market-status {
-      padding: 5px 15px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: bold;
-    }
-
-    .market-status.open {
-      background: rgba(0, 255, 65, 0.2);
-      color: var(--neon-green);
-      border: 1px solid var(--neon-green);
-    }
-
-    .market-status.closed {
-      background: rgba(255, 0, 0, 0.2);
-      color: var(--neon-red);
-      border: 1px solid var(--neon-red);
-    }
-
-    .stock-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-    }
-
-    .stock-card {
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(0, 255, 65, 0.3);
-      border-radius: 8px;
-      padding: 15px;
-      cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stock-card:hover {
-      border-color: var(--neon-green);
-      box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
-      transform: translateY(-3px);
-    }
-
-    .stock-card.selected {
-      border-color: var(--neon-green);
-      background: rgba(0, 255, 65, 0.1);
-    }
-
-    .stock-symbol {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.3rem;
-      color: var(--neon-green);
-      margin-bottom: 5px;
-    }
-
-    .stock-name {
-      font-size: 0.9rem;
-      color: #888;
       margin-bottom: 10px;
-    }
-
-    .stock-price {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .stock-change {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.9rem;
-    }
-
-    .stock-change.positive {
-      color: var(--neon-green);
-    }
-
-    .stock-change.negative {
-      color: var(--neon-red);
-    }
-
-    .mini-chart {
-      height: 40px;
-      margin-top: 10px;
-      display: flex;
-      align-items: flex-end;
-      gap: 2px;
-    }
-
-    .chart-bar {
-      flex: 1;
-      background: var(--neon-green);
-      opacity: 0.7;
-      transition: all 0.3s;
-    }
-
-    .chart-bar:hover {
-      opacity: 1;
-    }
-
-    /* Trading Interface */
-    .trading-panel {
-      background: rgba(0, 0, 0, 0.8);
-      border: 1px solid var(--neon-yellow);
-      border-radius: 10px;
-      padding: 20px;
-    }
-
-    .trade-tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .trade-tab {
-      padding: 10px 20px;
-      background: transparent;
-      border: 1px solid rgba(255, 255, 0, 0.3);
-      color: #888;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-family: 'Orbitron', sans-serif;
       text-transform: uppercase;
     }
-
-    .trade-tab.active {
-      background: rgba(255, 255, 0, 0.2);
-      color: var(--neon-yellow);
-      border-color: var(--neon-yellow);
-    }
-
-    .commodity-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 10px;
-    }
-
-    .commodity-card {
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(255, 255, 0, 0.3);
-      border-radius: 8px;
-      padding: 15px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .commodity-card:hover {
-      border-color: var(--neon-yellow);
-      box-shadow: 0 0 15px rgba(255, 255, 0, 0.2);
-      transform: scale(1.05);
-    }
-
-    .commodity-icon {
-      font-size: 2rem;
-      margin-bottom: 10px;
-    }
-
-    .commodity-name {
-      font-size: 0.9rem;
-      margin-bottom: 5px;
-    }
-
-    .commodity-price {
-      color: var(--neon-yellow);
-      font-weight: bold;
-    }
-
-    /* Quest Panel */
-    .quest-list {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .quest-card {
-      background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(0, 0, 0, 0.6));
-      border: 1px solid rgba(255, 0, 255, 0.3);
-      border-radius: 10px;
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s;
-    }
-
-    .quest-card:hover {
-      border-color: var(--neon-pink);
-      box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
-    }
-
-    .quest-card.completed {
-      border-color: var(--neon-green);
-      opacity: 0.7;
-    }
-
-    .quest-type {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      font-weight: bold;
-    }
-
-    .quest-type.daily {
-      background: rgba(0, 255, 255, 0.2);
-      color: var(--neon-cyan);
-    }
-
-    .quest-type.weekly {
-      background: rgba(255, 0, 255, 0.2);
-      color: var(--neon-pink);
-    }
-
-    .quest-type.story {
-      background: rgba(255, 255, 0, 0.2);
-      color: var(--neon-yellow);
-    }
-
-    .quest-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.1rem;
-      color: var(--neon-pink);
-      margin-bottom: 10px;
-    }
-
-    .quest-desc {
-      color: #aaa;
-      margin-bottom: 15px;
-      font-size: 0.9rem;
-    }
-
-    .quest-progress {
-      background: rgba(0, 0, 0, 0.5);
-      height: 8px;
-      border-radius: 4px;
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-
-    .quest-progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
-      transition: width 0.5s ease;
-    }
-
-    .quest-rewards {
-      display: flex;
-      gap: 15px;
-      font-size: 0.85rem;
-    }
-
-    .quest-reward {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    /* Stats Grid */
     .stats-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-bottom: 15px;
     }
-
     .stat-box {
       background: rgba(0, 0, 0, 0.5);
       border: 1px solid rgba(0, 255, 255, 0.2);
       padding: 10px;
       border-radius: 5px;
       text-align: center;
-      transition: all 0.3s;
     }
-
-    .stat-box:hover {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-      transform: translateY(-2px);
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
     .stat-value {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: var(--neon-cyan);
       font-family: 'Orbitron', sans-serif;
     }
-
     .stat-value.money { color: var(--neon-yellow); }
-    .stat-value.energy { color: var(--neon-green); }
-    .stat-value.heat { color: var(--neon-red); }
-    .stat-value.level { color: var(--neon-pink); }
-
-    /* Progress Bars */
-    .progress-container { margin: 10px 0; }
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      margin-bottom: 5px;
-      color: #aaa;
-    }
-    .progress-bar {
-      height: 8px;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 4px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
-      box-shadow: 0 0 10px var(--neon-cyan);
-      transition: width 0.5s ease;
-      position: relative;
-    }
-    .progress-fill::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      animation: progress-shine 2s infinite;
-    }
-
-    @keyframes progress-shine {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    /* Buttons */
     .btn {
       width: 100%;
       padding: 12px;
-      margin: 8px 0;
+      margin: 5px 0;
       border: none;
       border-radius: 5px;
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
       background: linear-gradient(135deg, #1a1a2e, #16213e);
       color: #fff;
       border: 1px solid rgba(0, 255, 255, 0.3);
     }
-
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .btn:hover::before { left: 100%; }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(0, 255, 255, 0.4);
-      border-color: var(--neon-cyan);
-    }
-
     .btn.primary {
       background: linear-gradient(135deg, var(--neon-cyan), #0080ff);
-      border-color: var(--neon-cyan);
     }
     .btn.danger {
       background: linear-gradient(135deg, var(--neon-red), #ff4080);
-      border-color: var(--neon-red);
     }
-    .btn.success {
-      background: linear-gradient(135deg, var(--neon-green), #00ff80);
-      border-color: var(--neon-green);
-      color: #000;
-    }
-    .btn.warning {
-      background: linear-gradient(135deg, var(--neon-yellow), #ffaa00);
-      border-color: var(--neon-yellow);
-      color: #000;
-    }
-
-    /* Activity Cards */
     .activity-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 15px;
-      margin-top: 15px;
+      grid-template-columns: 1fr;
+      gap: 10px;
     }
-
     .activity-card {
       background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
       border: 1px solid rgba(0, 255, 255, 0.3);
       border-radius: 10px;
-      padding: 20px;
-      cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
+      padding: 15px;
     }
-
-    .activity-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
-      border-color: var(--neon-cyan);
-    }
-
-    .activity-card h3 {
-      font-family: 'Orbitron', sans-serif;
-      color: var(--neon-cyan);
-      margin-bottom: 10px;
-      font-size: 1.1rem;
-    }
-
-    .activity-stats {
-      display: flex;
-      gap: 15px;
-      margin-top: 10px;
-      font-size: 0.85rem;
-    }
-
-    .activity-stat { display: flex; align-items: center; gap: 5px; }
-    .activity-stat.energy { color: var(--neon-green); }
-    .activity-stat.reward { color: var(--neon-yellow); }
-    .activity-stat.risk { color: var(--neon-red); }
-
-    /* Tabs Navigation */
     .tabs {
       display: flex;
-      gap: 5px;
-      margin-bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 10px;
       overflow-x: auto;
+      gap: 5px;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.5);
     }
-
     .tab {
-      padding: 12px 20px;
+      padding: 10px 15px;
       background: transparent;
       border: 1px solid transparent;
-      border-radius: 5px;
       color: #888;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.8rem;
-      text-transform: uppercase;
       white-space: nowrap;
     }
-
-    .tab:hover {
-      color: var(--neon-cyan);
-      background: rgba(0, 255, 255, 0.1);
-    }
-
     .tab.active {
       color: var(--neon-cyan);
-      background: rgba(0, 255, 255, 0.2);
       border-color: var(--neon-cyan);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
     }
-
-    .tab-content { display: none; }
-    .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Login Screen */
     .login-screen {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -1055,1756 +156,387 @@ enhanced_v2_html = '''<!DOCTYPE html>
       align-items: center;
       justify-content: center;
       z-index: 1000;
-      background-image: 
-        radial-gradient(circle at 20% 50%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
     }
-
     .login-box {
       width: 90%;
       max-width: 400px;
-      padding: 40px;
+      padding: 30px;
       background: var(--panel-bg);
       border: 1px solid var(--neon-cyan);
       border-radius: 10px;
-      box-shadow: 0 0 40px rgba(0, 255, 255, 0.2);
     }
-
-    .login-box h2 {
-      font-family: 'Orbitron', sans-serif;
-      text-align: center;
-      margin-bottom: 30px;
-      color: var(--neon-cyan);
-      font-size: 1.8rem;
-    }
-
-    .login-tabs {
-      display: flex;
-      margin-bottom: 20px;
-      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
-    }
-
-    .login-tab {
-      flex: 1;
-      padding: 10px;
-      background: transparent;
-      border: none;
-      color: #888;
-      cursor: pointer;
-      font-family: 'Orbitron', sans-serif;
-      text-transform: uppercase;
-      transition: all 0.3s;
-    }
-
-    .login-tab.active {
-      color: var(--neon-cyan);
-      border-bottom: 2px solid var(--neon-cyan);
-    }
-
-    /* Input Styling */
-    .input-group { margin-bottom: 15px; }
-    .input-group label {
-      display: block;
-      margin-bottom: 5px;
-      color: var(--neon-cyan);
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    input, select {
+    input {
       width: 100%;
       padding: 12px;
+      margin: 10px 0;
       background: rgba(0, 0, 0, 0.6);
       border: 1px solid rgba(0, 255, 255, 0.3);
-      border-radius: 5px;
       color: #fff;
-      font-family: 'Rajdhani', monospace;
-      font-size: 1rem;
-      transition: all 0.3s;
+      border-radius: 5px;
     }
-
-    input:focus, select:focus {
-      outline: none;
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-    }
-
-    /* Console Log */
     .console {
       background: rgba(0, 0, 0, 0.8);
       border: 1px solid rgba(0, 255, 255, 0.3);
       border-radius: 5px;
-      padding: 15px;
-      min-height: 200px;
-      max-height: 300px;
+      padding: 10px;
+      min-height: 150px;
+      max-height: 200px;
       overflow-y: auto;
-      font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
-
-    .console-entry {
-      margin-bottom: 8px;
-      padding: 5px;
-      border-left: 3px solid var(--neon-cyan);
-      padding-left: 10px;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .console-entry.success { border-left-color: var(--neon-green); }
-    .console-entry.error { border-left-color: var(--neon-red); }
-    .console-entry.warning { border-left-color: var(--neon-yellow); }
-
-    .timestamp { color: #666; font-size: 0.8rem; }
-
-    /* Inventory Grid */
-    .inventory-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .inventory-item {
-      aspect-ratio: 1;
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(0, 255, 255, 0.2);
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 0.75rem;
-      text-align: center;
-      padding: 5px;
-      position: relative;
-    }
-
-    .inventory-item:hover {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-      transform: scale(1.05);
-    }
-
-    .inventory-item.equipped {
-      border-color: var(--neon-green);
-      box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-    }
-
-    .inventory-item .item-icon { font-size: 1.5rem; margin-bottom: 3px; }
-
-    /* Notification */
-    .notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 15px 20px;
-      background: var(--panel-bg);
-      border-left: 4px solid var(--neon-cyan);
-      border-radius: 5px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-      transform: translateX(400px);
-      transition: transform 0.3s ease;
-      z-index: 1001;
-      max-width: 300px;
-    }
-
-    .notification.show { transform: translateX(0); }
-    .notification.success { border-left-color: var(--neon-green); }
-    .notification.error { border-left-color: var(--neon-red); }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.3); }
-    ::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--neon-pink); }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      .header h1 { font-size: 1.5rem; }
-      .stats-grid { grid-template-columns: 1fr; }
-      .activity-grid { grid-template-columns: 1fr; }
-      .combat-stage { flex-direction: column; gap: 20px; }
-      .vs-indicator { transform: rotate(90deg); }
-      .stock-grid { grid-template-columns: 1fr; }
+      font-family: monospace;
+      font-size: 0.8rem;
     }
   </style>
 </head>
 <body>
   <div class="grid-overlay"></div>
-  
-  <!-- Login Screen -->
   <div id="loginScreen" class="login-screen">
     <div class="login-box">
-      <h2>🔐 CITY ACCESS</h2>
-      <div class="login-tabs">
-        <button class="login-tab active" onclick="switchLoginTab('login')">Login</button>
-        <button class="login-tab" onclick="switchLoginTab('register')">Register</button>
-      </div>
-      <div id="loginForm">
-        <div class="input-group">
-          <label>Username</label>
-          <input type="text" id="loginUser" placeholder="Enter username">
-        </div>
-        <div class="input-group">
-          <label>Password</label>
-          <input type="password" id="loginPass" placeholder="Enter password">
-        </div>
-        <button class="btn primary" onclick="handleLogin()">Access City</button>
-      </div>
-      <div id="registerForm" style="display: none;">
-        <div class="input-group">
-          <label>Choose Username</label>
-          <input type="text" id="regUser" placeholder="Choose username">
-        </div>
-        <div class="input-group">
-          <label>Set Password</label>
-          <input type="password" id="regPass" placeholder="Set password">
-        </div>
-        <button class="btn success" onclick="handleRegister()">Create Identity</button>
-      </div>
+      <h2 style="text-align: center; color: var(--neon-cyan); margin-bottom: 20px;">🔐 CITY ACCESS</h2>
+      <input type="text" id="loginUser" placeholder="Username">
+      <input type="password" id="loginPass" placeholder="Password">
+      <button class="btn primary" onclick="login()">ACCESS CITY</button>
+      <button class="btn" onclick="register()">CREATE IDENTITY</button>
     </div>
   </div>
-
-  <!-- Main Game UI -->
   <div id="gameUI" style="display: none;">
     <header class="header">
       <h1>🏙️ CITY OF SYNDICATES</h1>
-      <div class="subtitle">NEON CITY RPG • v2.0 ENTERPRISE</div>
     </header>
-
-    <!-- Tab Navigation -->
     <div class="tabs">
       <button class="tab active" onclick="showTab('dashboard')">Dashboard</button>
       <button class="tab" onclick="showTab('crimes')">Crimes</button>
       <button class="tab" onclick="showTab('jobs')">Jobs</button>
-      <button class="tab" onclick="showTab('training')">Training</button>
-      <button class="tab" onclick="showTab('armory')">Armory</button>
-      <button class="tab" onclick="showTab('market')">Black Market</button>
+      <button class="tab" onclick="showTab('market')">Market</button>
       <button class="tab" onclick="showTab('stocks')">Stocks</button>
-      <button class="tab" onclick="showTab('pvp')">Arena</button>
-      <button class="tab" onclick="showTab('casino')">Casino</button>
-      <button class="tab" onclick="showTab('quests')">Quests</button>
-      <button class="tab" onclick="showTab('character')">Character</button>
+      <button class="tab" onclick="showTab('pvp')">PvP</button>
     </div>
-
-    <!-- Dynamic Banner -->
-    <div id="tabBanner" class="tab-banner banner-dashboard">
-      <div class="tab-banner-content" id="bannerTitle">CITY OVERVIEW</div>
-    </div>
-
+    <div id="tabBanner" class="tab-banner banner-dashboard"></div>
     <div class="container">
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <!-- Character Model -->
-        <div class="panel">
-          <div class="panel-title">👤 OPERATIVE</div>
-          <div class="character-model">
-            <div class="character-silhouette" id="charModel">
-              <div class="char-head"></div>
-              <div class="char-body"></div>
-              <div class="char-arm-left"></div>
-              <div class="char-arm-right"></div>
-              <div class="char-leg-left"></div>
-              <div class="char-leg-right"></div>
-              <div class="char-weapon" id="charWeapon">👊</div>
-            </div>
-            <div class="character-stats-overlay">
-              <div class="equipped-items">
-                <div class="equip-slot filled" data-slot="weapon" id="slotWeapon" onclick="showItemDetails('weapon')">🔫</div>
-                <div class="equip-slot filled" data-slot="armor" id="slotArmor" onclick="showItemDetails('armor')">🛡️</div>
-                <div class="equip-slot" data-slot="hat" id="slotHat" onclick="showItemDetails('hat')">🎩</div>
-                <div class="equip-slot" data-slot="accessory" id="slotAcc" onclick="showItemDetails('accessory')">💍</div>
-              </div>
-            </div>
-          </div>
-          <div style="text-align: center; font-family: 'Orbitron', sans-serif; color: var(--neon-cyan);" id="charName">
-            UNKNOWN
-          </div>
-        </div>
-
-        <!-- Player Stats -->
+      <div id="tab-dashboard" class="tab-content" style="display: block;">
         <div class="panel">
           <div class="panel-title">📊 STATUS</div>
           <div class="stats-grid">
             <div class="stat-box">
-              <div class="stat-label">Level</div>
-              <div class="stat-value level" id="statLevel">1</div>
+              <div>Level</div>
+              <div class="stat-value" id="statLevel">1</div>
             </div>
             <div class="stat-box">
-              <div class="stat-label">Money</div>
+              <div>Money</div>
               <div class="stat-value money" id="statMoney">$0</div>
             </div>
             <div class="stat-box">
-              <div class="stat-label">Energy</div>
-              <div class="stat-value energy" id="statEnergy">100/100</div>
+              <div>Energy</div>
+              <div class="stat-value" id="statEnergy">100/100</div>
             </div>
             <div class="stat-box">
-              <div class="stat-label">Heat</div>
-              <div class="stat-value heat" id="statHeat">0</div>
-            </div>
-          </div>
-          
-          <div class="progress-container">
-            <div class="progress-label">
-              <span>Experience</span>
-              <span id="xpText">0/100</span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-fill" id="xpBar" style="width: 0%"></div>
-            </div>
-          </div>
-
-          <div class="stats-grid" style="margin-top: 15px;">
-            <div class="stat-box">
-              <div class="stat-label">STR</div>
-              <div class="stat-value" id="statStr">1</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-label">AGI</div>
-              <div class="stat-value" id="statAgi">1</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-label">INT</div>
-              <div class="stat-value" id="statInt">1</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-label">CHA</div>
-              <div class="stat-value" id="statCha">1</div>
+              <div>Heat</div>
+              <div class="stat-value" id="statHeat">0</div>
             </div>
           </div>
         </div>
-
-        <!-- Portfolio Quick View -->
         <div class="panel">
-          <div class="panel-title">📈 PORTFOLIO</div>
-          <div id="miniPortfolio">
-            <div style="text-align: center; color: #666; padding: 20px;">
-              No investments
-            </div>
-          </div>
+          <div class="panel-title">⚡ QUICK ACTIONS</div>
+          <button class="btn" onclick="doCrime()">🎯 COMMIT CRIME</button>
+          <button class="btn" onclick="doJob()">💼 WORK JOB</button>
+          <button class="btn" onclick="rest()">😴 REST</button>
         </div>
-
-        <!-- Quick Actions -->
+      </div>
+      <div id="tab-crimes" class="tab-content" style="display: none;">
         <div class="panel">
-          <div class="panel-title">⚡ QUICK</div>
-          <button class="btn" onclick="showTab('crimes')">🎯 Crimes</button>
-          <button class="btn" onclick="showTab('jobs')">💼 Jobs</button>
-          <button class="btn" onclick="showTab('market')">💊 Market</button>
-          <button class="btn" onclick="showTab('stocks')">📈 Trade</button>
-          <button class="btn" onclick="showTab('pvp')">⚔️ Arena</button>
-          <button class="btn danger" onclick="logout()">🚪 Disconnect</button>
+          <div class="panel-title">🎯 CRIMES</div>
+          <div id="crimesList"></div>
         </div>
-      </aside>
-
-      <!-- Main Content -->
-      <main class="main-content">
-        <!-- Dashboard Tab -->
-        <div id="tab-dashboard" class="tab-content active">
-          <div class="panel">
-            <div class="panel-title">🌆 DISTRICTS</div>
-            <p style="color: #888; margin-bottom: 20px;">Select a district to operate in:</p>
-            
-            <div class="activity-grid">
-              <div class="activity-card" onclick="showTab('crimes')">
-                <h3>🎯 The Underbelly</h3>
-                <p>High risk criminal operations</p>
-                <div class="activity-stats">
-                  <span class="activity-stat energy">⚡ High</span>
-                  <span class="activity-stat reward">💰 Very High</span>
-                  <span class="activity-stat risk">🔥 Extreme</span>
-                </div>
-              </div>
-              
-              <div class="activity-card" onclick="showTab('jobs')">
-                <h3>💼 Uptown</h3>
-                <p>Legitimate business district</p>
-                <div class="activity-stats">
-                  <span class="activity-stat energy">⚡ Medium</span>
-                  <span class="activity-stat reward">💰 Medium</span>
-                </div>
-              </div>
-              
-              <div class="activity-card" onclick="showTab('market')">
-                <h3>💊 Black Market</h3>
-                <p>Underground trading hub</p>
-                <div class="activity-stats">
-                  <span class="activity-stat risk">⚠️ Illegal</span>
-                  <span class="activity-stat reward">💰 High Risk</span>
-                </div>
-              </div>
-              
-              <div class="activity-card" onclick="showTab('stocks')">
-                <h3>📈 Financial District</h3>
-                <p>Corporate trading floor</p>
-                <div class="activity-stats">
-                  <span class="activity-stat">📊 Live Market</span>
-                  <span class="activity-stat reward">💰 Investment</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Crimes Tab -->
-        <div id="tab-crimes" class="tab-content">
-          <div class="panel">
-            <div class="panel-title">🎯 CRIMINAL OPERATIONS</div>
-            <div id="crimesList" class="activity-grid"></div>
-          </div>
-        </div>
-
-        <!-- Jobs Tab -->
-        <div id="tab-jobs" class="tab-content">
-          <div class="panel">
-            <div class="panel-title">💼 EMPLOYMENT CENTER</div>
-            <div id="jobsList" class="activity-grid"></div>
-          </div>
-        </div>
-
-        <!-- Training Tab -->
-        <div id="tab-training" class="tab-content">
-          <div class="panel">
-            <div class="panel-title">💪 TRAINING FACILITIES</div>
-            <div id="trainingList" class="activity-grid"></div>
-          </div>
-        </div>
-
-        <!-- Armory Tab -->
-        <div id="tab-armory" class="tab-content">
-          <div class="panel">
-            <div class="panel-title">🔫 ARMORY</div>
-            <div id="armoryList" class="activity-grid"></div>
-          </div>
-        </div>
-
-        <!-- Black Market Tab -->
-        <div id="tab-market" class="tab-content">
-          <div class="trading-panel">
-            <div class="trade-tabs">
-              <button class="trade-tab active" onclick="switchTradeTab('drugs')">💊 Substances</button>
-              <button class="trade-tab" onclick="switchTradeTab('contraband')">📦 Contraband</button>
-              <button class="trade-tab" onclick="switchTradeTab('info')">💾 Data</button>
-            </div>
-            
-            <div id="trade-drugs" class="trade-content">
-              <div class="panel-title">STREET PHARMACEUTICALS</div>
-              <div id="drugsList" class="commodity-grid"></div>
-            </div>
-            
-            <div id="trade-contraband" class="trade-content" style="display: none;">
-              <div class="panel-title">CONTRABAND GOODS</div>
-              <div id="contrabandList" class="commodity-grid"></div>
-            </div>
-            
-            <div id="trade-info" class="trade-content" style="display: none;">
-              <div class="panel-title">BLACKMARKET DATA</div>
-              <div id="infoList" class="commodity-grid"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Stocks Tab -->
-        <div id="tab-stocks" class="tab-content">
-          <div class="stock-ticker">
-            <div class="ticker-header">
-              <div class="ticker-title">📈 NEON EXCHANGE</div>
-              <div class="market-status open" id="marketStatus">MARKET OPEN</div>
-            </div>
-            <div class="stock-grid" id="stockGrid"></div>
-          </div>
-          
-          <div class="panel">
-            <div class="panel-title">YOUR PORTFOLIO</div>
-            <div id="portfolioList">
-              <div style="text-align: center; color: #666; padding: 40px;">
-                No stocks owned. Buy shares to build your portfolio.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- PvP Tab -->
-        <div id="tab-pvp" class="tab-content">
-          <div class="pvp-arena">
-            <div class="combat-stage">
-              <div class="combatant" id="playerSide">
-                <div class="combatant-avatar" id="playerAvatar">🥷</div>
-                <div class="combatant-name" id="playerName">YOU</div>
-                <div class="combatant-hp">
-                  <div class="combatant-hp-fill" id="playerHp" style="width: 100%"></div>
-                </div>
-                <div style="margin-top: 5px; font-size: 0.8rem; color: var(--neon-green);">
-                  <span id="playerHpText">100/100 HP</span>
-                </div>
-              </div>
-              
-              <div class="vs-indicator">VS</div>
-              
-              <div class="combatant" id="enemySide">
-                <div class="combatant-avatar enemy" id="enemyAvatar">👹</div>
-                <div class="combatant-name" id="enemyName">WAITING...</div>
-                <div class="combatant-hp">
-                  <div class="combatant-hp-fill" id="enemyHp" style="width: 100%"></div>
-                </div>
-                <div style="margin-top: 5px; font-size: 0.8rem; color: var(--neon-red);">
-                  <span id="enemyHpText">---</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="combat-log" id="combatLog">
-              <div class="combat-entry">Welcome to the Arena. Queue up to fight!</div>
-            </div>
-
-            <div class="combat-controls" id="combatControls">
-              <button class="combat-btn attack" onclick="joinQueue()">⚔️ JOIN QUEUE</button>
-              <button class="combat-btn defend" onclick="checkMatch()">📋 STATUS</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Casino Tab -->
-        <div id="tab-casino" class="tab-content">
-          <div class="panel">
-            <div class="panel-title">🎰 NEON CASINO</div>
-            <div class="activity-grid">
-              <div class="activity-card">
-                <h3>🎰 Slot Machine</h3>
-                <p>Test your luck</p>
-                <div class="input-group">
-                  <input type="number" id="slotsWager" placeholder="Wager ($)" min="1">
-                </div>
-                <button class="btn success" onclick="playSlots()">SPIN</button>
-              </div>
-              <div class="activity-card">
-                <h3>🃏 Blackjack</h3>
-                <p>Beat the dealer</p>
-                <div class="input-group">
-                  <input type="number" id="bjWager" placeholder="Wager ($)" min="1">
-                </div>
-                <button class="btn success" onclick="playBlackjack()">DEAL</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quests Tab -->
-        <div id="tab-quests" class="tab-content">
-          <div class="panel">
-            <div class="panel-title">📜 ACTIVE QUESTS</div>
-            <div id="activeQuests" class="quest-list"></div>
-          </div>
-          
-          <div class="panel">
-            <div class="panel-title">🏆 COMPLETED</div>
-            <div id="completedQuests" class="quest-list"></div>
-          </div>
-        </div>
-
-        <!-- Character Tab -->
-        <div id="tab-character" class="tab-content">
-          <div class="panel">
-            <div class="panel-title">🎒 INVENTORY</div>
-            <div id="inventoryList" class="inventory-grid"></div>
-          </div>
-        </div>
-
-        <!-- Console Log -->
+      </div>
+      <div id="tab-jobs" class="tab-content" style="display: none;">
         <div class="panel">
-          <div class="panel-title">📟 SYSTEM LOG</div>
-          <div class="console" id="gameLog">
-            <div class="console-entry">
-              <span class="timestamp">[SYSTEM]</span> City of Syndicates v2.0 Enterprise initialized
-            </div>
+          <div class="panel-title">💼 JOBS</div>
+          <div id="jobsList"></div>
+        </div>
+      </div>
+      <div id="tab-market" class="tab-content" style="display: none;">
+        <div class="panel">
+          <div class="panel-title">💊 BLACK MARKET</div>
+          <div id="marketList"></div>
+        </div>
+      </div>
+      <div id="tab-stocks" class="tab-content" style="display: none;">
+        <div class="panel">
+          <div class="panel-title">📈 STOCKS</div>
+          <div id="stockList"></div>
+        </div>
+      </div>
+      <div id="tab-pvp" class="tab-content" style="display: none;">
+        <div class="panel">
+          <div class="panel-title">⚔️ PvP ARENA</div>
+          <div style="text-align: center; padding: 40px;">
+            <div style="font-size: 4rem; margin-bottom: 20px;">🥷 VS 👹</div>
+            <button class="btn primary" onclick="joinPvp()">JOIN BATTLE</button>
           </div>
         </div>
-      </main>
+      </div>
+      <div class="panel">
+        <div class="panel-title">📟 LOG</div>
+        <div class="console" id="gameLog">Welcome to City of Syndicates...</div>
+      </div>
     </div>
   </div>
-
-  <div id="notification" class="notification"></div>
-
-  <script> 
+  <script>
+        const API = "https://city-of-syndicates-1.onrender.com";
     
-    // ==================== GAME DATA CATALOGS ====================
-    
-    // EXPANDED CRIMES (8 total)
     const CRIMES = [
-      {id: "pickpocket", name: "Pickpocket", energy: 10, reward: "$20-50", exp: 5, success: "90%", heat: 2, desc: "Quick street theft", icon: "👋"},
-      {id: "mugging", name: "Mugging", energy: 20, reward: "$60-140", exp: 12, success: "70%", heat: 5, desc: "Armed robbery", icon: "🔪"},
-      {id: "warehouse_hit", name: "Warehouse Hit", energy: 35, reward: "$150-320", exp: 25, success: "55%", heat: 10, desc: "Industrial burglary", icon: "🏭"},
-      {id: "bank_heist", name: "Bank Heist", energy: 60, reward: "$500-1000", exp: 50, success: "40%", heat: 18, desc: "High-stakes robbery", icon: "🏦"},
-      {id: "cyber_crime", name: "Cyber Intrusion", energy: 25, reward: "$200-450", exp: 30, success: "65%", heat: 8, desc: "Hack corporate systems", icon: "💻"},
-      {id: "extortion", name: "Extortion", energy: 30, reward: "$300-600", exp: 35, success: "60%", heat: 12, desc: "Protection racket", icon: "💀"},
-      {id: "smuggling", name: "Smuggling Run", energy: 45, reward: "$400-800", exp: 40, success: "50%", heat: 15, desc: "Transport illegal goods", icon: "🚚"},
-      {id: "assassination", name: "Wetwork", energy: 80, reward: "$1000-2000", exp: 80, success: "35%", heat: 25, desc: "High-risk elimination", icon: "🎯"}
+      {id: "pickpocket", name: "Pickpocket", energy: 10, reward: [20, 50], exp: 5, heat: 2, icon: "👋"},
+      {id: "mugging", name: "Mugging", energy: 20, reward: [60, 140], exp: 12, heat: 5, icon: "🔪"},
+      {id: "warehouse", name: "Warehouse Hit", energy: 35, reward: [150, 320], exp: 25, heat: 10, icon: "🏭"},
+      {id: "bank", name: "Bank Heist", energy: 60, reward: [500, 1000], exp: 50, heat: 18, icon: "🏦"},
+      {id: "cyber", name: "Cyber Intrusion", energy: 25, reward: [200, 450], exp: 30, heat: 8, icon: "💻"},
+      {id: "extortion", name: "Extortion", energy: 30, reward: [300, 600], exp: 35, heat: 12, icon: "💀"},
+      {id: "smuggling", name: "Smuggling", energy: 45, reward: [400, 800], exp: 40, heat: 15, icon: "🚚"},
+      {id: "hit", name: "Wetwork", energy: 80, reward: [1000, 2000], exp: 80, heat: 25, icon: "🎯"}
     ];
-
-    // EXPANDED JOBS (12 total)
-    const JOBS = [
-      {id: "courier", name: "Courier", energy: 10, payout: "$25-60", exp: 4, desc: "Fast delivery runs", icon: "📦"},
-      {id: "bouncer", name: "Bouncer", energy: 18, payout: "$60-140", exp: 10, desc: "Club security", icon: "💪"},
-      {id: "bartender", name: "Bartender", energy: 15, payout: "$50-110", exp: 8, desc: "Mix drinks", icon: "🍸"},
-      {id: "vip_host", name: "VIP Host", energy: 25, payout: "$120-260", exp: 18, desc: "Premium venue host", icon: "🎩"},
-      {id: "mechanic", name: "Mechanic", energy: 20, payout: "$80-180", exp: 12, desc: "Fix vehicles", icon: "🔧"},
-      {id: "hacker", name: "IT Consultant", energy: 22, payout: "$150-320", exp: 20, desc: "Legal coding work", icon: "💻"},
-      {id: "security", name: "Security Guard", energy: 28, payout: "$100-220", exp: 15, desc: "Corporate security", icon: "🛡️"},
-      {id: "driver", name: "Chauffeur", energy: 16, payout: "$70-150", exp: 10, desc: "Drive clients", icon: "🚗"},
-      {id: "cook", name: "Line Cook", energy: 20, payout: "$60-130", exp: 8, desc: "Restaurant work", icon: "🍳"},
-      {id: "dealer", name: "Card Dealer", energy: 24, payout: "$140-300", exp: 16, desc: "Casino dealer", icon: "🃏"},
-      {id: "trainer", name: "Gym Trainer", energy: 30, payout: "$180-380", exp: 22, desc: "Train clients", icon: "🏋️"},
-      {id: "fixer", name: "Corporate Fixer", energy: 35, payout: "$250-500", exp: 28, desc: "Solve problems", icon: "🕴️"}
-    ];
-
-    // TRAINING
-    const TRAINING = [
-      {id: "gym_strength", name: "Strength Training", stat: "STR", energy: 20, cost: "$60", gain: "+1-2", exp: 8, icon: "💪"},
-      {id: "parkour_agility", name: "Parkour Drills", stat: "AGI", energy: 20, cost: "$60", gain: "+1-2", exp: 8, icon: "🏃"},
-      {id: "study_intel", name: "Study Session", stat: "INT", energy: 15, cost: "$40", gain: "+1-2", exp: 7, icon: "📚"},
-      {id: "social_charisma", name: "Charisma Workshop", stat: "CHA", energy: 15, cost: "$40", gain: "+1-2", exp: 7, icon: "🎭"},
-      {id: "combat_training", name: "Combat Training", stat: "STR/AGI", energy: 35, cost: "$120", gain: "+2-3", exp: 15, icon: "⚔️"},
-      {id: "hacking_course", name: "Hacking Course", stat: "INT", energy: 25, cost: "$100", gain: "+2-3", exp: 12, icon: "🖥️"}
-    ];
-
-    // EXPANDED WEAPONS (10 total)
-    const WEAPONS = {
-      "brass_knuckles": {name: "Brass Knuckles", damage: 5, price: 80, level: 1, icon: "👊"},
-      "switchblade": {name: "Switchblade", damage: 10, price: 220, level: 2, icon: "🔪"},
-      "pistol": {name: "Pistol", damage: 25, price: 2000, level: 5, icon: "🔫"},
-      "shotgun": {name: "Shotgun", damage: 45, price: 4500, level: 8, icon: "🔫"},
-      "assault_rifle": {name: "Assault Rifle", damage: 60, price: 8000, level: 12, icon: "🔫"},
-      "sniper_rifle": {name: "Sniper Rifle", damage: 80, price: 12000, level: 15, icon: "🎯"},
-      "katana": {name: "Katana", damage: 35, price: 3500, level: 7, icon: "⚔️"},
-      "taser": {name: "Taser", damage: 15, price: 600, level: 3, icon: "⚡"},
-      "grenade": {name: "Grenade", damage: 100, price: 5000, level: 10, icon: "💣"},
-      "plasma_pistol": {name: "Plasma Pistol", damage: 50, price: 15000, level: 20, icon: "🔫"}
-    };
-
-    // EXPANDED ARMOR (8 total)
-    const ARMOR = {
-      "leather_jacket": {name: "Leather Jacket", defense: 5, price: 120, level: 1, icon: "🧥"},
-      "kevlar_vest": {name: "Kevlar Vest", defense: 14, price: 1200, level: 4, icon: "🛡️"},
-      "combat_armor": {name: "Combat Armor", defense: 25, price: 3500, level: 8, icon: "🛡️"},
-      "tactical_suit": {name: "Tactical Suit", defense: 35, price: 6000, level: 12, icon: "🥷"},
-      "exo_suit": {name: "Exo-Skeleton", defense: 50, price: 15000, level: 18, icon: "🤖"},
-      "nano_armor": {name: "Nano-Weave Armor", defense: 40, price: 10000, level: 15, icon: "✨"},
-      "stealth_suit": {name: "Stealth Suit", defense: 20, price: 4500, level: 10, icon: "👤"},
-      "riot_gear": {name: "Riot Gear", defense: 30, price: 2800, level: 6, icon: "🛡️"}
-    };
-
-    // STREET DRUGS
-    const DRUGS = {
-      "weed": {name: "Neon Green", price: 50, sellPrice: 80, risk: "Low", energy: 10, desc: "Relaxes nerves", icon: "🌿"},
-      "cocaine": {name: "White Lightning", price: 200, sellPrice: 350, risk: "Medium", energy: 25, desc: "Energy boost", icon: "❄️"},
-      "heroin": {name: "Black Tar", price: 400, sellPrice: 700, risk: "High", energy: 40, desc: "Pain numbing", icon: "🖤"},
-      "meth": {name: "Crystal Blue", price: 300, sellPrice: 550, risk: "High", energy: 35, desc: "Intense focus", icon: "💎"},
-      "lsd": {name: "Neon Dreams", price: 150, sellPrice: 280, risk: "Medium", energy: 20, desc: "Enhanced senses", icon: "🌈"},
-      "mdma": {name: "Love Bomb", price: 180, sellPrice: 320, risk: "Medium", energy: 22, desc: "Social boost", icon: "💊"},
-      "steroids": {name: "Synthol", price: 250, sellPrice: 450, risk: "Medium", energy: 30, desc: "Strength boost", icon: "💉"},
-      "adrenaline": {name: "Adrenaline Shot", price: 500, sellPrice: 900, risk: "High", energy: 50, desc: "Combat boost", icon: "💉"}
-    };
-
-    // CONTRABAND ITEMS
-    const CONTRABAND = {
-      "fake_ids": {name: "Fake IDs", price: 300, sellPrice: 600, icon: "🎫"},
-      "stolen_cards": {name: "Stolen Credit Cards", price: 800, sellPrice: 1500, icon: "💳"},
-      "weapons_parts": {name: "Weapon Parts", price: 1200, sellPrice: 2200, icon: "🔧"},
-      "organs": {name: "Synthetic Organs", price: 5000, sellPrice: 9000, icon: "🫀"},
-      "cyberware": {name: "Illegal Cyberware", price: 8000, sellPrice: 15000, icon: "🦾"},
-      "corporate_secrets": {name: "Corporate Secrets", price: 3000, sellPrice: 6000, icon: "📁"}
-    };
-
-    // BLACKMARKET DATA
-    const INFO_GOODS = {
-      "security_codes": {name: "Security Codes", price: 1000, sellPrice: 2000, icon: "🔐"},
-      "bank_routing": {name: "Bank Routing Numbers", price: 2500, sellPrice: 5000, icon: "🏦"},
-      "identity_files": {name: "Identity Files", price: 1500, sellPrice: 3000, icon: "👤"},
-      "location_data": {name: "Location Data", price: 800, sellPrice: 1600, icon: "📍"},
-      "blueprints": {name: "Building Blueprints", price: 2000, sellPrice: 4000, icon: "🏗️"},
-      "encryption_keys": {name: "Encryption Keys", price: 3500, sellPrice: 7000, icon: "🔑"}
-    };
-
-    // STOCK MARKET
-    const STOCKS = [
-      {symbol: "NEON", name: "Neon Corp", price: 150, volatility: 0.05, trend: 0.02, desc: "Tech conglomerate"},
-      {symbol: "SYND", name: "Syndicate Holdings", price: 85, volatility: 0.08, trend: 0.01, desc: "Crime syndicate front"},
-      {symbol: "CYBR", name: "CyberDyne", price: 220, volatility: 0.12, trend: 0.03, desc: "Cybernetics manufacturer"},
-      {symbol: "PHAR", name: "PharmaTek", price: 95, volatility: 0.06, trend: 0.015, desc: "Pharmaceutical giant"},
-      {symbol: "ARMS", name: "Armstrong Weapons", price: 180, volatility: 0.07, trend: 0.025, desc: "Arms manufacturer"},
-      {symbol: "SECU", name: "SecureNet", price: 120, volatility: 0.04, trend: 0.01, desc: "Security systems"},
-      {symbol: "BIO", name: "BioSynth", price: 200, volatility: 0.09, trend: 0.02, desc: "Synthetic biology"},
-      {symbol: "ENER", name: "EnerCore", price: 140, volatility: 0.06, trend: 0.018, desc: "Energy corporation"}
-    ];
-
-    // EXPANDED QUESTS
-    const QUESTS = [
-      // Daily Quests
-      {id: "daily_crimes_3", type: "daily", name: "Street Hustle", desc: "Complete 3 crimes", goal: {crimes: 3}, reward: {money: 500, exp: 50}, icon: "🎯"},
-      {id: "daily_jobs_2", type: "daily", name: "Day Job", desc: "Complete 2 jobs", goal: {jobs: 2}, reward: {money: 400, exp: 40}, icon: "💼"},
-      {id: "daily_trade", type: "daily", name: "Market Mover", desc: "Buy or sell 5 items", goal: {trades: 5}, reward: {money: 600, exp: 60}, icon: "💹"},
-      {id: "daily_stocks", type: "daily", name: "Day Trader", desc: "Make 3 stock trades", goal: {stock_trades: 3}, reward: {money: 800, exp: 70}, icon: "📈"},
-      
-      // Weekly Quests
-      {id: "weekly_crime_spree", type: "weekly", name: "Crime Spree", desc: "Complete 20 crimes", goal: {crimes: 20}, reward: {money: 5000, exp: 500, item: "assault_rifle"}, icon: "🔥"},
-      {id: "weekly_empire", type: "weekly", name: "Empire Builder", desc: "Earn $50,000 total", goal: {earnings: 50000}, reward: {money: 10000, exp: 1000}, icon: "🏢"},
-      {id: "weekly_warrior", type: "weekly", name: "Arena Warrior", desc: "Win 10 PvP matches", goal: {pvp_wins: 10}, reward: {money: 3000, exp: 400, item: "combat_armor"}, icon: "⚔️"},
-      
-      // Story Quests
-      {id: "story_first_blood", type: "story", name: "First Blood", desc: "Win your first PvP match", goal: {pvp_wins: 1}, reward: {money: 1000, exp: 100, item: "switchblade"}, icon: "🩸"},
-      {id: "story_drug_lord", type: "story", name: "Drug Lord", desc: "Trade $10,000 in substances", goal: {drug_volume: 10000}, reward: {money: 5000, exp: 300}, icon: "💊"},
-      {id: "story_wall_street", type: "story", name: "Wolf of Neon Street", desc: "Make $50,000 in stock profits", goal: {stock_profit: 50000}, reward: {money: 20000, exp: 800}, icon: "🐺"},
-      {id: "story_armed", type: "story", name: "Armed to the Teeth", desc: "Own 5 different weapons", goal: {weapons_owned: 5}, reward: {money: 3000, exp: 200, item: "shotgun"}, icon: "🔫"},
-      {id: "story_untouchable", type: "story", name: "Untouchable", desc: "Reach 0 heat after having 50+", goal: {heat_cleared: 50}, reward: {money: 10000, exp: 500}, icon: "👑"}
-    ];
-
-    // State
-    let currentUser = null;
-    let authToken = null;
-    let playerData = null;
-    let currentPortfolio = {};
-    let stockPrices = {};
-    let marketOpen = true;
-    let selectedStock = null;
-
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-      renderCrimes();
-      renderJobs();
-      renderTraining();
-      renderArmory();
-      renderDrugs();
-      renderContraband();
-      renderInfoGoods();
-      initStockMarket();
-      renderQuests();
-      
-      // Check saved session
-      const savedToken = localStorage.getItem('syndicates_token');
-      const savedUser = localStorage.getItem('syndicates_user');
-      if (savedToken && savedUser) {
-        authToken = savedToken;
-        currentUser = savedUser;
-        showGameUI();
-        fetchPlayerData();
-        startStockSimulation();
-      }
-    });
-
-    // ==================== UI FUNCTIONS ====================
     
-    function switchLoginTab(tab) {
-      document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
-      
-      if (tab === 'login') {
-        document.getElementById('loginForm').style.display = 'block';
-        document.getElementById('registerForm').style.display = 'none';
-      } else {
-        document.getElementById('loginForm').style.display = 'none';
-        document.getElementById('registerForm').style.display = 'block';
+    const JOBS = [
+      {id: "courier", name: "Courier", energy: 10, payout: [25, 60], exp: 4, icon: "📦"},
+      {id: "bouncer", name: "Bouncer", energy: 18, payout: [60, 140], exp: 10, icon: "💪"},
+      {id: "bartender", name: "Bartender", energy: 15, payout: [50, 110], exp: 8, icon: "🍸"},
+      {id: "vip", name: "VIP Host", energy: 25, payout: [120, 260], exp: 18, icon: "🎩"},
+      {id: "mechanic", name: "Mechanic", energy: 20, payout: [80, 180], exp: 12, icon: "🔧"},
+      {id: "hacker", name: "IT Consultant", energy: 22, payout: [150, 320], exp: 20, icon: "💻"},
+      {id: "security", name: "Security Guard", energy: 28, payout: [100, 220], exp: 15, icon: "🛡️"},
+      {id: "driver", name: "Chauffeur", energy: 16, payout: [70, 150], exp: 10, icon: "🚗"},
+      {id: "cook", name: "Line Cook", energy: 20, payout: [60, 130], exp: 8, icon: "🍳"},
+      {id: "dealer", name: "Card Dealer", energy: 24, payout: [140, 300], exp: 16, icon: "🃏"},
+      {id: "trainer", name: "Gym Trainer", energy: 30, payout: [180, 380], exp: 22, icon: "🏋️"},
+      {id: "fixer", name: "Corporate Fixer", energy: 35, payout: [250, 500], exp: 28, icon: "🕴️"}
+    ];
+    
+    const DRUGS = [
+      {id: "weed", name: "Neon Green", buy: 50, sell: 80, icon: "🌿"},
+      {id: "coke", name: "White Lightning", buy: 200, sell: 350, icon: "❄️"},
+      {id: "heroin", name: "Black Tar", buy: 400, sell: 700, icon: "🖤"},
+      {id: "meth", name: "Crystal Blue", buy: 300, sell: 550, icon: "💎"},
+      {id: "lsd", name: "Neon Dreams", buy: 150, sell: 280, icon: "🌈"},
+      {id: "mdma", name: "Love Bomb", buy: 180, sell: 320, icon: "💊"},
+      {id: "roids", name: "Synthol", buy: 250, sell: 450, icon: "💉"},
+      {id: "adrenaline", name: "Adrenaline Shot", buy: 500, sell: 900, icon: "💉"}
+    ];
+    
+    const STOCKS = [
+      {sym: "NEON", name: "Neon Corp", price: 150},
+      {sym: "SYND", name: "Syndicate Holdings", price: 85},
+      {sym: "CYBR", name: "CyberDyne", price: 220},
+      {sym: "PHAR", name: "PharmaTek", price: 95},
+      {sym: "ARMS", name: "Armstrong Weapons", price: 180},
+      {sym: "SECU", name: "SecureNet", price: 120},
+      {sym: "BIO", name: "BioSynth", price: 200},
+      {sym: "ENER", name: "EnerCore", price: 140}
+    ];
+    
+    let player = null;
+    let token = null;
+    let stockPrices = {};
+    
+    function log(msg) {
+      const el = document.getElementById('gameLog');
+      el.innerHTML += `<div>> ${msg}</div>`;
+      el.scrollTop = el.scrollHeight;
+    }
+    
+    async function api(path, method="GET", body=null) {
+      try {
+        const opts = {
+          method: method,
+          headers: {"Content-Type": "application/json"}
+        };
+        if (token) opts.headers["Authorization"] = "Bearer " + token;
+        if (body) opts.body = JSON.stringify(body);
+        const r = await fetch(API + path, opts);
+        return await r.json();
+      } catch(e) {
+        log("Error: " + e.message);
+        return {error: e.message};
       }
     }
-
-    function showTab(tabName) {
-      // Update tab buttons
+    
+    async function register() {
+      const u = document.getElementById('loginUser').value;
+      const p = document.getElementById('loginPass').value;
+      if (!u || !p) return log("Enter credentials");
+      const data = await api("/register", "POST", {username: u, password: p});
+      if (data.error) log(data.error);
+      else log("Registered! Now login.");
+    }
+    
+    async function login() {
+      const u = document.getElementById('loginUser').value;
+      const p = document.getElementById('loginPass').value;
+      if (!u || !p) return log("Enter credentials");
+      
+      const form = new URLSearchParams();
+      form.append('username', u);
+      form.append('password', p);
+      
+      const r = await fetch(API + '/token', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: form
+      });
+      const data = await r.json();
+      
+      if (data.access_token) {
+        token = data.access_token;
+        player = u;
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('gameUI').style.display = 'block';
+        log("Connected as " + u);
+        updateStats();
+        renderCrimes();
+        renderJobs();
+        renderMarket();
+        renderStocks();
+        startStocks();
+      } else {
+        log("Login failed");
+      }
+    }
+    
+    function showTab(tab) {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       event.target.classList.add('active');
-      
-      // Update content
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      document.getElementById('tab-' + tabName).classList.add('active');
-      
-      // Update banner
-      const banner = document.getElementById('tabBanner');
-      const title = document.getElementById('bannerTitle');
-      
-      banner.className = 'tab-banner banner-' + tabName;
-      
-      const titles = {
-        'dashboard': 'CITY OVERVIEW',
-        'crimes': 'CRIMINAL OPERATIONS',
-        'jobs': 'EMPLOYMENT CENTER',
-        'training': 'TRAINING FACILITIES',
-        'armory': 'WEAPONS & ARMOR',
-        'market': 'BLACK MARKET',
-        'stocks': 'NEON EXCHANGE',
-        'pvp': 'COMBAT ARENA',
-        'casino': 'NEON CASINO',
-        'quests': 'CONTRACTS',
-        'character': 'OPERATIVE PROFILE'
-      };
-      
-      title.textContent = titles[tabName] || 'CITY OF SYNDICATES';
+      document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+      document.getElementById('tab-' + tab).style.display = 'block';
+      document.getElementById('tabBanner').className = 'tab-banner banner-' + tab;
     }
-
-    function switchTradeTab(tab) {
-      document.querySelectorAll('.trade-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
-      
-      document.querySelectorAll('.trade-content').forEach(c => c.style.display = 'none');
-      document.getElementById('trade-' + tab).style.display = 'block';
-    }
-
-    function showGameUI() {
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('gameUI').style.display = 'block';
-    }
-
-    function showLoginScreen() {
-      document.getElementById('loginScreen').style.display = 'flex';
-      document.getElementById('gameUI').style.display = 'none';
-    }
-
-    // ==================== API FUNCTIONS ====================
     
-    async function apiCall(endpoint, method = 'GET', body = null) {
-      try {
-        const options = {
-          method: method,
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        };
-        
-        if (authToken) {
-          options.headers['Authorization'] = `Bearer ${authToken}`;
-        }
-        
-        if (body) {
-          options.body = JSON.stringify(body);
-        }
-        
-        const response = await fetch(API + endpoint, options);
-        const data = await response.json();
-        
-        if (!response.ok) {
-          throw new Error(data.detail || 'Request failed');
-        }
-        
-        return data;
-      } catch (error) {
-        log(error.message, 'error');
-        showNotification(error.message, 'error');
-        throw error;
+    async function updateStats() {
+      const data = await api('/me');
+      if (data.username) {
+        document.getElementById('statLevel').textContent = data.level;
+        document.getElementById('statMoney').textContent = '$' + Math.floor(data.money);
+        document.getElementById('statEnergy').textContent = data.energy + '/' + data.max_energy;
+        document.getElementById('statHeat').textContent = data.heat;
       }
     }
-
-    // ==================== AUTH FUNCTIONS ====================
-    
-    async function handleRegister() {
-      const username = document.getElementById('regUser').value;
-      const password = document.getElementById('regPass').value;
-      
-      if (!username || !password) {
-        showNotification('Please fill all fields', 'error');
-        return;
-      }
-      
-      try {
-        const data = await apiCall('/register', 'POST', {username, password});
-        log(`Registered as ${username}`, 'success');
-        showNotification('Identity created! Please login.', 'success');
-        switchLoginTab('login');
-      } catch (e) {}
-    }
-
-    async function handleLogin() {
-      const username = document.getElementById('loginUser').value;
-      const password = document.getElementById('loginPass').value;
-      
-      if (!username || !password) {
-        showNotification('Please fill all fields', 'error');
-        return;
-      }
-      
-      try {
-        const formData = new URLSearchParams();
-        formData.append('username', username);
-        formData.append('password', password);
-        
-        const response = await fetch(API + '/token', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          body: formData
-        });
-        
-        const data = await response.json();
-        
-        if (!response.ok) {
-          throw new Error(data.detail || 'Login failed');
-        }
-        
-        authToken = data.access_token;
-        currentUser = username;
-        
-        localStorage.setItem('syndicates_token', authToken);
-        localStorage.setItem('syndicates_user', currentUser);
-        
-        log(`Connected as ${username}`, 'success');
-        showNotification('Access granted', 'success');
-        showGameUI();
-        fetchPlayerData();
-        startStockSimulation();
-      } catch (error) {
-        showNotification(error.message, 'error');
-      }
-    }
-
-    function logout() {
-      authToken = null;
-      currentUser = null;
-      playerData = null;
-      localStorage.removeItem('syndicates_token');
-      localStorage.removeItem('syndicates_user');
-      stopStockSimulation();
-      showLoginScreen();
-      log('Disconnected from city', 'warning');
-    }
-
-    // ==================== GAME FUNCTIONS ====================
-    
-    async function fetchPlayerData() {
-      try {
-        const data = await apiCall('/me');
-        playerData = data;
-        updateStats(data);
-        updateCharacterModel(data);
-        updateInventory(data.inventory);
-        updatePortfolio();
-      } catch (e) {
-        if (e.message.includes('401')) {
-          logout();
-        }
-      }
-    }
-
-    function updateStats(data) {
-      document.getElementById('statLevel').textContent = data.level;
-      document.getElementById('statMoney').textContent = '$' + Math.floor(data.money).toLocaleString();
-      document.getElementById('statEnergy').textContent = `${data.energy}/${data.max_energy}`;
-      document.getElementById('statHeat').textContent = data.heat;
-      document.getElementById('statStr').textContent = data.strength;
-      document.getElementById('statAgi').textContent = data.agility;
-      document.getElementById('statInt').textContent = data.intelligence;
-      document.getElementById('statCha').textContent = data.charisma;
-      document.getElementById('charName').textContent = data.username.toUpperCase();
-      
-      const xpNeeded = data.level * 100;
-      const xpProgress = (data.experience % 100);
-      document.getElementById('xpText').textContent = `${xpProgress}/100`;
-      document.getElementById('xpBar').style.width = `${xpProgress}%`;
-    }
-
-    function updateCharacterModel(data) {
-      // Update weapon display
-      const weapon = data.inventory?.equipped_core?.weapon;
-      const weaponIcon = weapon ? WEAPONS[weapon]?.icon || '🔫' : '👊';
-      document.getElementById('charWeapon').textContent = weaponIcon;
-      
-      // Update equipment slots
-      const armor = data.inventory?.equipped_core?.armor;
-      document.getElementById('slotWeapon').textContent = weaponIcon;
-      document.getElementById('slotArmor').textContent = armor ? ARMOR[armor]?.icon || '🛡️' : '🛡️';
-      
-      // Add visual effects based on stats
-      const model = document.getElementById('charModel');
-      if (data.level >= 20) {
-        model.style.filter = 'drop-shadow(0 0 30px var(--neon-yellow))';
-      } else if (data.level >= 10) {
-        model.style.filter = 'drop-shadow(0 0 25px var(--neon-purple))';
-      }
-    }
-
-    function updateInventory(inventory) {
-      const container = document.getElementById('inventoryList');
-      container.innerHTML = '';
-      
-      if (!inventory || !inventory.items) return;
-      
-      inventory.items.forEach(item => {
-        const div = document.createElement('div');
-        div.className = `inventory-item ${item.equipped ? 'equipped' : ''}`;
-        
-        let icon = '📦';
-        if (item.item_type === 'weapon') icon = WEAPONS[item.item_id]?.icon || '🔫';
-        if (item.item_type === 'armor') icon = ARMOR[item.item_id]?.icon || '🛡️';
-        if (item.item_type === 'cosmetic') icon = '👕';
-        
-        div.innerHTML = `
-          <div class="item-icon">${icon}</div>
-          <div style="font-size: 0.7rem; margin-top: 5px;">${item.item_id}</div>
-        `;
-        
-        div.onclick = () => equipItem(item.item_type, item.item_id);
-        container.appendChild(div);
-      });
-    }
-
-    // ==================== ACTIVITY FUNCTIONS ====================
-    
-    async function commitCrime(crimeId) {
-      try {
-        const data = await apiCall('/crime', 'POST', {crime_id: crimeId});
-        
-        if (data.success) {
-          log(`✅ ${data.message} +$${data.reward}`, 'success');
-          showNotification(`Earned $${data.reward}!`, 'success');
-        } else {
-          log(`❌ ${data.message}`, 'error');
-          showNotification('Crime failed!', 'error');
-        }
-        
-        fetchPlayerData();
-      } catch (e) {}
-    }
-
-    async function doJob(jobId) {
-      try {
-        const data = await apiCall('/job', 'POST', {job_id: jobId});
-        log(`✅ Worked as ${data.job}. Earned $${data.payout}`, 'success');
-        showNotification(`Earned $${data.payout}`, 'success');
-        fetchPlayerData();
-      } catch (e) {}
-    }
-
-    async function doTraining(trainingId) {
-      try {
-        const data = await apiCall('/training', 'POST', {training_id: trainingId});
-        log(`✅ Training complete! ${data.stat} +${data.gain}`, 'success');
-        showNotification('Training complete!', 'success');
-        fetchPlayerData();
-      } catch (e) {}
-    }
-
-    async function buyItem(itemType, itemId) {
-      try {
-        const data = await apiCall('/armory/buy', 'POST', {
-          item_type: itemType,
-          item_id: itemId
-        });
-        log(`✅ Purchased ${itemId}`, 'success');
-        showNotification('Item purchased!', 'success');
-        fetchPlayerData();
-      } catch (e) {}
-    }
-
-    async function equipItem(itemType, itemId) {
-      try {
-        const data = await apiCall('/inventory/equip', 'POST', {
-          item_type: itemType,
-          item_id: itemId
-        });
-        log(`✅ Equipped ${itemId}`, 'success');
-        fetchPlayerData();
-      } catch (e) {}
-    }
-
-    // ==================== TRADING FUNCTIONS ====================
-    
-    async function buyDrug(drugId) {
-      try {
-        const data = await apiCall('/market/buy', 'POST', {
-          item_type: 'drug',
-          item_id: drugId,
-          quantity: 1
-        });
-        log(`✅ Bought ${DRUGS[drugId].name}`, 'success');
-        showNotification('Purchase complete!', 'success');
-        fetchPlayerData();
-      } catch (e) {
-        // Fallback for demo
-        log(`✅ Bought ${DRUGS[drugId].name} (Demo)`, 'success');
-        showNotification('Purchase simulated!', 'success');
-      }
-    }
-
-    async function sellDrug(drugId) {
-      try {
-        const data = await apiCall('/market/sell', 'POST', {
-          item_type: 'drug',
-          item_id: drugId,
-          quantity: 1
-        });
-        log(`✅ Sold ${DRUGS[drugId].name}`, 'success');
-        showNotification('Sale complete!', 'success');
-        fetchPlayerData();
-      } catch (e) {
-        log(`✅ Sold ${DRUGS[drugId].name} (Demo)`, 'success');
-        showNotification('Sale simulated!', 'success');
-      }
-    }
-
-    // ==================== STOCK MARKET FUNCTIONS ====================
-    
-    function initStockMarket() {
-      // Initialize prices
-      STOCKS.forEach(stock => {
-        stockPrices[stock.symbol] = stock.price;
-        currentPortfolio[stock.symbol] = 0;
-      });
-      renderStocks();
-    }
-
-    let stockInterval;
-    
-    function startStockSimulation() {
-      updateStockPrices();
-      stockInterval = setInterval(updateStockPrices, 5000); // Update every 5 seconds
-    }
-
-    function stopStockSimulation() {
-      if (stockInterval) clearInterval(stockInterval);
-    }
-
-    function updateStockPrices() {
-      STOCKS.forEach(stock => {
-        const change = (Math.random() - 0.5) * 2 * stock.volatility;
-        const trendChange = stock.trend * 0.1;
-        const newPrice = stockPrices[stock.symbol] * (1 + change + trendChange);
-        stockPrices[stock.symbol] = Math.max(1, Math.round(newPrice * 100) / 100);
-      });
-      renderStocks();
-      updatePortfolio();
-    }
-
-    function renderStocks() {
-      const container = document.getElementById('stockGrid');
-      if (!container) return;
-      
-      container.innerHTML = STOCKS.map(stock => {
-        const currentPrice = stockPrices[stock.symbol];
-        const originalPrice = stock.price;
-        const change = ((currentPrice - originalPrice) / originalPrice * 100).toFixed(2);
-        const isPositive = change >= 0;
-        const owned = currentPortfolio[stock.symbol] || 0;
-        
-        // Generate mini chart bars
-        const bars = Array(10).fill(0).map(() => {
-          const height = 20 + Math.random() * 80;
-          return `<div class="chart-bar" style="height: ${height}%; background: ${isPositive ? 'var(--neon-green)' : 'var(--neon-red)'};"></div>`;
-        }).join('');
-        
-        return `
-          <div class="stock-card ${selectedStock === stock.symbol ? 'selected' : ''}" onclick="selectStock('${stock.symbol}')">
-            <div class="stock-symbol">${stock.symbol}</div>
-            <div class="stock-name">${stock.name}</div>
-            <div class="stock-price" style="color: ${isPositive ? 'var(--neon-green)' : 'var(--neon-red)'}">
-              $${currentPrice.toFixed(2)}
-            </div>
-            <div class="stock-change ${isPositive ? 'positive' : 'negative'}">
-              ${isPositive ? '▲' : '▼'} ${Math.abs(change)}%
-            </div>
-            <div class="mini-chart">${bars}</div>
-            ${owned > 0 ? `<div style="margin-top: 10px; font-size: 0.8rem; color: var(--neon-yellow);">Owned: ${owned} shares</div>` : ''}
-          </div>
-        `;
-      }).join('');
-    }
-
-    function selectStock(symbol) {
-      selectedStock = symbol;
-      renderStocks();
-      
-      const stock = STOCKS.find(s => s.symbol === symbol);
-      showNotification(`Selected ${stock.name} ($${stockPrices[symbol]})`, 'info');
-    }
-
-    async function buyStock() {
-      if (!selectedStock) {
-        showNotification('Select a stock first!', 'error');
-        return;
-      }
-      
-      const shares = prompt(`Buy how many shares of ${selectedStock} at $${stockPrices[selectedStock]}?`);
-      if (!shares || shares < 1) return;
-      
-      const totalCost = stockPrices[selectedStock] * shares;
-      
-      try {
-        // Try API first
-        const data = await apiCall('/stocks/buy', 'POST', {
-          symbol: selectedStock,
-          shares: parseInt(shares)
-        });
-        
-        currentPortfolio[selectedStock] = (currentPortfolio[selectedStock] || 0) + parseInt(shares);
-        log(`✅ Bought ${shares} shares of ${selectedStock}`, 'success');
-        showNotification(`Bought ${shares} shares!`, 'success');
-        fetchPlayerData();
-      } catch (e) {
-        // Demo mode
-        if (playerData && playerData.money >= totalCost) {
-          currentPortfolio[selectedStock] = (currentPortfolio[selectedStock] || 0) + parseInt(shares);
-          playerData.money -= totalCost;
-          updateStats(playerData);
-          log(`✅ Bought ${shares} shares of ${selectedStock} (Demo)`, 'success');
-          showNotification(`Bought ${shares} shares!`, 'success');
-          renderStocks();
-          updatePortfolio();
-        } else {
-          showNotification('Not enough money!', 'error');
-        }
-      }
-    }
-
-    async function sellStock() {
-      if (!selectedStock) {
-        showNotification('Select a stock first!', 'error');
-        return;
-      }
-      
-      const owned = currentPortfolio[selectedStock] || 0;
-      if (owned === 0) {
-        showNotification('You don\'t own any shares!', 'error');
-        return;
-      }
-      
-      const shares = prompt(`Sell how many shares of ${selectedStock}? (You own ${owned})`);
-      if (!shares || shares < 1 || shares > owned) return;
-      
-      const totalValue = stockPrices[selectedStock] * shares;
-      
-      try {
-        const data = await apiCall('/stocks/sell', 'POST', {
-          symbol: selectedStock,
-          shares: parseInt(shares)
-        });
-        
-        currentPortfolio[selectedStock] -= parseInt(shares);
-        log(`✅ Sold ${shares} shares of ${selectedStock}`, 'success');
-        showNotification(`Sold ${shares} shares for $${totalValue.toFixed(2)}!`, 'success');
-        fetchPlayerData();
-      } catch (e) {
-        // Demo mode
-        currentPortfolio[selectedStock] -= parseInt(shares);
-        playerData.money += totalValue;
-        updateStats(playerData);
-        log(`✅ Sold ${shares} shares of ${selectedStock} for $${totalValue.toFixed(2)} (Demo)`, 'success');
-        showNotification(`Sold ${shares} shares!`, 'success');
-        renderStocks();
-        updatePortfolio();
-      }
-    }
-
-    function updatePortfolio() {
-      const container = document.getElementById('portfolioList');
-      const miniPortfolio = document.getElementById('miniPortfolio');
-      
-      let totalValue = 0;
-      let hasStocks = false;
-      
-      let html = '<div style="display: flex; flex-direction: column; gap: 10px;">';
-      
-      Object.entries(currentPortfolio).forEach(([symbol, shares]) => {
-        if (shares > 0) {
-          hasStocks = true;
-          const value = shares * stockPrices[symbol];
-          totalValue += value;
-          const stock = STOCKS.find(s => s.symbol === symbol);
-          
-          html += `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(0,0,0,0.5); border-radius: 5px;">
-              <div>
-                <div style="font-weight: bold; color: var(--neon-green);">${symbol}</div>
-                <div style="font-size: 0.8rem; color: #888;">${shares} shares</div>
-              </div>
-              <div style="text-align: right;">
-                <div style="color: var(--neon-cyan);">$${value.toFixed(2)}</div>
-                <div style="font-size: 0.8rem; color: #888;">@ $${stockPrices[symbol]}</div>
-              </div>
-            </div>
-          `;
-        }
-      });
-      
-      html += '</div>';
-      
-      if (!hasStocks) {
-        html = '<div style="text-align: center; color: #666; padding: 40px;">No stocks owned. Buy shares to build your portfolio.</div>';
-        miniPortfolio.innerHTML = '<div style="text-align: center; color: #666; padding: 20px;">No investments</div>';
-      } else {
-        html += `
-          <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(0,255,255,0.3); display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: #888;">Total Value:</span>
-            <span style="font-family: Orbitron; font-size: 1.3rem; color: var(--neon-yellow);">$${totalValue.toFixed(2)}</span>
-          </div>
-          <div style="margin-top: 15px; display: flex; gap: 10px;">
-            <button class="btn success" onclick="buyStock()">BUY MORE</button>
-            <button class="btn danger" onclick="sellStock()">SELL</button>
-          </div>
-        `;
-        
-        miniPortfolio.innerHTML = `
-          <div style="text-align: center; padding: 10px;">
-            <div style="font-size: 0.8rem; color: #888;">Portfolio Value</div>
-            <div style="font-family: Orbitron; font-size: 1.2rem; color: var(--neon-green);">$${totalValue.toFixed(2)}</div>
-          </div>
-        `;
-      }
-      
-      if (container) container.innerHTML = html;
-    }
-
-    // ==================== PVP FUNCTIONS ====================
-    
-    async function joinQueue() {
-      try {
-        const data = await apiCall('/pvp/queue', 'POST');
-        log(`⚔️ ${data.message}`, 'success');
-        showNotification(data.message, 'success');
-        
-        // Simulate finding opponent
-        setTimeout(() => {
-          simulateMatchStart();
-        }, 2000);
-      } catch (e) {
-        simulateMatchStart();
-      }
-    }
-
-    function simulateMatchStart() {
-      const enemies = ['CyberPsycho', 'NeonBlade', 'StreetSamurai', 'ChromeMerc', 'DataThief'];
-      const enemy = enemies[Math.floor(Math.random() * enemies.length)];
-      
-      document.getElementById('enemyName').textContent = enemy;
-      document.getElementById('enemyHpText').textContent = '100/100 HP';
-      document.getElementById('enemyHp').style.width = '100%';
-      
-      log(`⚔️ Match found! Facing ${enemy}`, 'success');
-      showNotification(`Match started vs ${enemy}!`, 'success');
-      
-      // Enable combat controls
-      document.getElementById('combatControls').innerHTML = `
-        <button class="combat-btn attack" onclick="combatAction('attack')">⚔️ ATTACK</button>
-        <button class="combat-btn defend" onclick="combatAction('defend')">🛡️ DEFEND</button>
-      `;
-      
-      addCombatEntry('Match started!', 'info');
-    }
-
-    async function combatAction(action) {
-      const playerDmg = Math.floor(Math.random() * 20) + 10;
-      const enemyDmg = Math.floor(Math.random() * 15) + 5;
-      
-      if (action === 'attack') {
-        // Player attacks
-        showDamagePopup('playerAvatar', playerDmg, false);
-        document.getElementById('enemyAvatar').classList.add('damaged');
-        setTimeout(() => document.getElementById('enemyAvatar').classList.remove('damaged'), 500);
-        
-        const currentEnemyHp = parseInt(document.getElementById('enemyHpText').textContent);
-        const newEnemyHp = Math.max(0, currentEnemyHp - playerDmg);
-        document.getElementById('enemyHpText').textContent = `${newEnemyHp}/100 HP`;
-        document.getElementById('enemyHp').style.width = `${newEnemyHp}%`;
-        
-        if (newEnemyHp < 30) {
-          document.getElementById('enemyHp').classList.add('low');
-        }
-        
-        addCombatEntry(`You dealt ${playerDmg} damage!`, 'damage');
-        
-        if (newEnemyHp <= 0) {
-          addCombatEntry('Victory! Opponent defeated!', 'critical');
-          showNotification('Victory!', 'success');
-          resetCombat();
-          return;
-        }
-      } else {
-        addCombatEntry('You took defensive stance!', 'heal');
-      }
-      
-      // Enemy attacks back
-      setTimeout(() => {
-        showDamagePopup('enemyAvatar', enemyDmg, false);
-        document.getElementById('playerAvatar').classList.add('damaged');
-        setTimeout(() => document.getElementById('playerAvatar').classList.remove('damaged'), 500);
-        
-        const currentPlayerHp = parseInt(document.getElementById('playerHpText').textContent);
-        const newPlayerHp = Math.max(0, currentPlayerHp - enemyDmg);
-        document.getElementById('playerHpText').textContent = `${newPlayerHp}/100 HP`;
-        document.getElementById('playerHp').style.width = `${newPlayerHp}%`;
-        
-        if (newPlayerHp < 30) {
-          document.getElementById('playerHp').classList.add('low');
-        }
-        
-        addCombatEntry(`${document.getElementById('enemyName').textContent} dealt ${enemyDmg} damage!`, 'damage');
-        
-        if (newPlayerHp <= 0) {
-          addCombatEntry('Defeat! You were knocked out!', 'critical');
-          showNotification('Defeat!', 'error');
-          resetCombat();
-        }
-      }, 1000);
-    }
-
-    function showDamagePopup(targetId, damage, isCritical) {
-      const target = document.getElementById(targetId);
-      const popup = document.createElement('div');
-      popup.className = `damage-popup ${isCritical ? 'critical' : ''}`;
-      popup.textContent = `-${damage}`;
-      popup.style.left = '50%';
-      popup.style.top = '0';
-      popup.style.transform = 'translateX(-50%)';
-      target.appendChild(popup);
-      
-      setTimeout(() => popup.remove(), 1000);
-    }
-
-    function addCombatEntry(message, type) {
-      const log = document.getElementById('combatLog');
-      const entry = document.createElement('div');
-      entry.className = `combat-entry ${type}`;
-      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
-      log.appendChild(entry);
-      log.scrollTop = log.scrollHeight;
-    }
-
-    function resetCombat() {
-      document.getElementById('playerHpText').textContent = '100/100 HP';
-      document.getElementById('playerHp').style.width = '100%';
-      document.getElementById('playerHp').classList.remove('low');
-      document.getElementById('enemyName').textContent = 'WAITING...';
-      document.getElementById('enemyHpText').textContent = '---';
-      document.getElementById('enemyHp').style.width = '100%';
-      document.getElementById('enemyHp').classList.remove('low');
-      
-      document.getElementById('combatControls').innerHTML = `
-        <button class="combat-btn attack" onclick="joinQueue()">⚔️ JOIN QUEUE</button>
-        <button class="combat-btn defend" onclick="checkMatch()">📋 STATUS</button>
-      `;
-    }
-
-    async function checkMatch() {
-      try {
-        const data = await apiCall('/pvp/match');
-        if (data.match) {
-          log(`⚔️ Match found! vs ${data.opponent}`, 'success');
-        } else {
-          log('⏳ No active match', 'warning');
-        }
-      } catch (e) {
-        log('⏳ No active match', 'warning');
-      }
-    }
-
-    // ==================== CASINO FUNCTIONS ====================
-    
-    async function playSlots() {
-      const wager = document.getElementById('slotsWager').value;
-      if (!wager || wager < 1) {
-        showNotification('Enter wager amount', 'error');
-        return;
-      }
-      
-      try {
-        const data = await apiCall('/casino/slots', 'POST', {wager: parseInt(wager)});
-        
-        if (data.win) {
-          log(`🎰 JACKPOT! Won $${data.winnings}`, 'success');
-          showNotification(`Won $${data.winnings}!`, 'success');
-        } else {
-          log(`🎰 Lost $${wager}`, 'error');
-          showNotification('Better luck next time!', 'error');
-        }
-        fetchPlayerData();
-      } catch (e) {
-        // Demo
-        const win = Math.random() > 0.7;
-        if (win) {
-          const winnings = wager * 3;
-          playerData.money += winnings - wager;
-          log(`🎰 JACKPOT! Won $${winnings} (Demo)`, 'success');
-          showNotification(`Won $${winnings}!`, 'success');
-        } else {
-          playerData.money -= wager;
-          log(`🎰 Lost $${wager} (Demo)`, 'error');
-          showNotification('Better luck next time!', 'error');
-        }
-        updateStats(playerData);
-      }
-    }
-
-    async function playBlackjack() {
-      const wager = document.getElementById('bjWager').value;
-      if (!wager || wager < 1) {
-        showNotification('Enter wager amount', 'error');
-        return;
-      }
-      
-      try {
-        const data = await apiCall('/casino/blackjack', 'POST', {wager: parseInt(wager)});
-        
-        if (data.win) {
-          log(`🃏 Blackjack! Won $${data.winnings}`, 'success');
-          showNotification(`Won $${data.winnings}!`, 'success');
-        } else {
-          log(`🃏 Lost $${wager}`, 'error');
-          showNotification('House wins!', 'error');
-        }
-        fetchPlayerData();
-      } catch (e) {
-        // Demo
-        const win = Math.random() > 0.5;
-        if (win) {
-          const winnings = wager * 2;
-          playerData.money += winnings - wager;
-          log(`🃏 Blackjack! Won $${winnings} (Demo)`, 'success');
-          showNotification(`Won $${winnings}!`, 'success');
-        } else {
-          playerData.money -= wager;
-          log(`🃏 Lost $${wager} (Demo)`, 'error');
-          showNotification('House wins!', 'error');
-        }
-        updateStats(playerData);
-      }
-    }
-
-    // ==================== RENDERING FUNCTIONS ====================
     
     function renderCrimes() {
-      const container = document.getElementById('crimesList');
-      if (!container) return;
-      
-      container.innerHTML = CRIMES.map(crime => `
-        <div class="activity-card" onclick="commitCrime('${crime.id}')">
-          <h3>${crime.icon} ${crime.name}</h3>
-          <p style="color: #888; font-size: 0.9rem;">${crime.desc}</p>
-          <div class="activity-stats">
-            <span class="activity-stat energy">⚡ ${crime.energy}</span>
-            <span class="activity-stat reward">💰 ${crime.reward}</span>
-            <span class="activity-stat risk">🔥 ${crime.heat}</span>
-          </div>
-          <div style="margin-top: 10px; font-size: 0.8rem; color: #666;">
-            Success: ${crime.success} • XP: +${crime.exp}
+      const div = document.getElementById('crimesList');
+      div.innerHTML = CRIMES.map(c => `
+        <div class="activity-card" onclick="commitCrime('${c.id}')" style="margin-bottom: 10px;">
+          <div style="font-size: 1.2rem; font-weight: bold;">${c.icon} ${c.name}</div>
+          <div style="color: #888; font-size: 0.9rem;">
+            ⚡ ${c.energy} | 💰 $${c.reward[0]}-${c.reward[1]} | 🔥 ${c.heat}
           </div>
         </div>
       `).join('');
     }
-
-    function renderJobs() {
-      const container = document.getElementById('jobsList');
-      if (!container) return;
-      
-      container.innerHTML = JOBS.map(job => `
-        <div class="activity-card" onclick="doJob('${job.id}')">
-          <h3>${job.icon} ${job.name}</h3>
-          <p style="color: #888; font-size: 0.9rem;">${job.desc}</p>
-          <div class="activity-stats">
-            <span class="activity-stat energy">⚡ ${job.energy}</span>
-            <span class="activity-stat reward">💰 ${job.payout}</span>
-          </div>
-          <div style="margin-top: 10px; font-size: 0.8rem; color: #666;">
-            XP: +${job.exp}
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderTraining() {
-      const container = document.getElementById('trainingList');
-      if (!container) return;
-      
-      container.innerHTML = TRAINING.map(train => `
-        <div class="activity-card" onclick="doTraining('${train.id}')">
-          <h3>${train.icon} ${train.name}</h3>
-          <p style="color: #888; font-size: 0.9rem;">Improves ${train.stat}</p>
-          <div class="activity-stats">
-            <span class="activity-stat energy">⚡ ${train.energy}</span>
-            <span class="activity-stat reward">📈 ${train.gain} ${train.stat}</span>
-          </div>
-          <div style="margin-top: 10px; font-size: 0.8rem; color: #666;">
-            Cost: ${train.cost} • XP: +${train.exp}
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderArmory() {
-      const container = document.getElementById('armoryList');
-      if (!container) return;
-      
-      let html = '<h3 style="width: 100%; color: var(--neon-cyan); margin-bottom: 10px;">🔫 WEAPONS</h3>';
-      
-      html += Object.entries(WEAPONS).map(([id, item]) => `
-        <div class="activity-card" onclick="buyItem('weapon', '${id}')">
-          <h3>${item.icon} ${item.name}</h3>
-          <p style="color: #888; font-size: 0.9rem;">Damage: ${item.damage}</p>
-          <div class="activity-stats">
-            <span class="activity-stat reward">💰 $${item.price.toLocaleString()}</span>
-            <span class="activity-stat">Lv.${item.level}</span>
-          </div>
-        </div>
-      `).join('');
-      
-      html += '<h3 style="width: 100%; color: var(--neon-cyan); margin: 20px 0 10px;">🛡️ ARMOR</h3>';
-      
-      html += Object.entries(ARMOR).map(([id, item]) => `
-        <div class="activity-card" onclick="buyItem('armor', '${id}')">
-          <h3>${item.icon} ${item.name}</h3>
-          <p style="color: #888; font-size: 0.9rem;">Defense: ${item.defense}</p>
-          <div class="activity-stats">
-            <span class="activity-stat reward">💰 $${item.price.toLocaleString()}</span>
-            <span class="activity-stat">Lv.${item.level}</span>
-          </div>
-        </div>
-      `).join('');
-      
-      container.innerHTML = html;
-    }
-
-    function renderDrugs() {
-      const container = document.getElementById('drugsList');
-      if (!container) return;
-      
-      container.innerHTML = Object.entries(DRUGS).map(([id, drug]) => `
-        <div class="commodity-card" onclick="buyDrug('${id}')">
-          <div class="commodity-icon">${drug.icon}</div>
-          <div class="commodity-name">${drug.name}</div>
-          <div style="font-size: 0.8rem; color: #888;">${drug.desc}</div>
-          <div style="margin-top: 10px; display: flex; justify-content: space-between;">
-            <span style="color: var(--neon-red);">Buy: $${drug.price}</span>
-            <span style="color: var(--neon-green);">Sell: $${drug.sellPrice}</span>
-          </div>
-          <div style="font-size: 0.7rem; color: var(--neon-yellow); margin-top: 5px;">
-            Risk: ${drug.risk}
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderContraband() {
-      const container = document.getElementById('contrabandList');
-      if (!container) return;
-      
-      container.innerHTML = Object.entries(CONTRABAND).map(([id, item]) => `
-        <div class="commodity-card" onclick="buyDrug('${id}')">
-          <div class="commodity-icon">${item.icon}</div>
-          <div class="commodity-name">${item.name}</div>
-          <div style="margin-top: 10px; display: flex; justify-content: space-between;">
-            <span style="color: var(--neon-red);">Buy: $${item.price}</span>
-            <span style="color: var(--neon-green);">Sell: $${item.sellPrice}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderInfoGoods() {
-      const container = document.getElementById('infoList');
-      if (!container) return;
-      
-      container.innerHTML = Object.entries(INFO_GOODS).map(([id, item]) => `
-        <div class="commodity-card" onclick="buyDrug('${id}')">
-          <div class="commodity-icon">${item.icon}</div>
-          <div class="commodity-name">${item.name}</div>
-          <div style="margin-top: 10px; display: flex; justify-content: space-between;">
-            <span style="color: var(--neon-red);">Buy: $${item.price}</span>
-            <span style="color: var(--neon-green);">Sell: $${item.sellPrice}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderQuests() {
-      const activeContainer = document.getElementById('activeQuests');
-      const completedContainer = document.getElementById('completedQuests');
-      
-      if (!activeContainer || !completedContainer) return;
-      
-      const active = QUESTS.filter(q => q.type !== 'completed');
-      
-      activeContainer.innerHTML = active.map(quest => `
-        <div class="quest-card">
-          <div class="quest-type ${quest.type}">${quest.type}</div>
-          <div class="quest-title">${quest.icon} ${quest.name}</div>
-          <div class="quest-desc">${quest.desc}</div>
-          <div class="quest-progress">
-            <div class="quest-progress-fill" style="width: ${Math.random() * 100}%"></div>
-          </div>
-          <div class="quest-rewards">
-            <span class="quest-reward">💰 $${quest.reward.money}</span>
-            <span class="quest-reward">⭐ ${quest.reward.exp} XP</span>
-            ${quest.reward.item ? `<span class="quest-reward">🎁 Item</span>` : ''}
-          </div>
-        </div>
-      `).join('');
-      
-      completedContainer.innerHTML = `
-        <div style="text-align: center; color: #666; padding: 40px;">
-          No completed quests yet. Start working on active contracts!
-        </div>
-      `;
-    }
-
-    // ==================== UTILITY FUNCTIONS ====================
     
-    function log(message, type = 'info') {
-      const logEl = document.getElementById('gameLog');
-      const entry = document.createElement('div');
-      entry.className = `console-entry ${type}`;
-      
-      const time = new Date().toLocaleTimeString('en-US', {hour12: false, hour: '2-digit', minute:'2-digit'});
-      entry.innerHTML = `<span class="timestamp">[${time}]</span> ${message}`;
-      
-      logEl.appendChild(entry);
-      logEl.scrollTop = logEl.scrollHeight;
-      
-      while (logEl.children.length > 50) {
-        logEl.removeChild(logEl.firstChild);
-      }
+    function renderJobs() {
+      const div = document.getElementById('jobsList');
+      div.innerHTML = JOBS.map(j => `
+        <div class="activity-card" onclick="doJob('${j.id}')" style="margin-bottom: 10px;">
+          <div style="font-size: 1.2rem; font-weight: bold;">${j.icon} ${j.name}</div>
+          <div style="color: #888; font-size: 0.9rem;">
+            ⚡ ${j.energy} | 💰 $${j.payout[0]}-${j.payout[1]}
+          </div>
+        </div>
+      `).join('');
     }
-
-    function showNotification(message, type = 'info') {
-      const notif = document.getElementById('notification');
-      notif.textContent = message;
-      notif.className = `notification ${type} show`;
-      
+    
+    function renderMarket() {
+      const div = document.getElementById('marketList');
+      div.innerHTML = DRUGS.map(d => `
+        <div class="activity-card" style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 1.2rem; font-weight: bold;">${d.icon} ${d.name}</div>
+            <div style="color: #888; font-size: 0.8rem;">Buy: $${d.buy} | Sell: $${d.sell}</div>
+          </div>
+          <div>
+            <button class="btn" style="width: auto; padding: 8px 15px; margin: 0 5px;" onclick="buyDrug('${d.id}')">BUY</button>
+            <button class="btn" style="width: auto; padding: 8px 15px; margin: 0;" onclick="sellDrug('${d.id}')">SELL</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function renderStocks() {
+      const div = document.getElementById('stockList');
+      div.innerHTML = STOCKS.map(s => {
+        const price = stockPrices[s.sym] || s.price;
+        return `
+        <div class="activity-card" style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 1.2rem; font-weight: bold; color: var(--neon-green);">${s.sym}</div>
+            <div style="color: #888; font-size: 0.8rem;">${s.name}</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 1.3rem; font-weight: bold;">$${price.toFixed(2)}</div>
+            <button class="btn" style="width: auto; padding: 8px 15px; margin: 5px 0;" onclick="buyStock('${s.sym}')">BUY</button>
+          </div>
+        </div>
+      `}).join('');
+    }
+    
+    async function commitCrime(id) {
+      const crime = CRIMES.find(c => c.id === id);
+      const data = await api('/crime', 'POST', {crime_id: id});
+      if (data.success) {
+        const reward = Math.floor(Math.random() * (crime.reward[1] - crime.reward[0])) + crime.reward[0];
+        log(`✅ ${crime.name} successful! +$${reward}`);
+      } else {
+        log(`❌ ${crime.name} failed!`);
+      }
+      updateStats();
+    }
+    
+    async function doJob(id) {
+      const job = JOBS.find(j => j.id === id);
+      const data = await api('/job', 'POST', {job_id: id});
+      const payout = Math.floor(Math.random() * (job.payout[1] - job.payout[0])) + job.payout[0];
+      log(`✅ Worked as ${job.name}. +$${payout}`);
+      updateStats();
+    }
+    
+    async function rest() {
+      const data = await api('/rest', 'POST');
+      log(`😴 Rested. Energy restored.`);
+      updateStats();
+    }
+    
+    function buyDrug(id) {
+      const drug = DRUGS.find(d => d.id === id);
+      log(`💊 Bought ${drug.name} for $${drug.buy}`);
+    }
+    
+    function sellDrug(id) {
+      const drug = DRUGS.find(d => d.id === id);
+      log(`💊 Sold ${drug.name} for $${drug.sell}`);
+    }
+    
+    function startStocks() {
+      STOCKS.forEach(s => stockPrices[s.sym] = s.price);
+      setInterval(() => {
+        STOCKS.forEach(s => {
+          const change = (Math.random() - 0.5) * 0.1;
+          stockPrices[s.sym] = Math.max(1, stockPrices[s.sym] * (1 + change));
+        });
+        renderStocks();
+      }, 5000);
+    }
+    
+    function buyStock(sym) {
+      const price = stockPrices[sym];
+      log(`📈 Bought 1 share of ${sym} at $${price.toFixed(2)}`);
+    }
+    
+    function joinPvp() {
+      log(`⚔️ Joining PvP queue...`);
       setTimeout(() => {
-        notif.classList.remove('show');
-      }, 3000);
+        log(`⚔️ Match found! Battle starting...`);
+      }, 2000);
     }
-
-    function showItemDetails(slot) {
-      showNotification(`Slot: ${slot.toUpperCase()} - Click items in inventory to equip`, 'info');
-    }
-
-    // Auto-refresh
+    
     setInterval(() => {
-      if (currentUser && authToken) {
-        fetchPlayerData();
-      }
+      if (token) updateStats();
     }, 30000);
   </script>
 </body>
-</html>'''
-
-# Combine all parts
-full_html_v2 = enhanced_v2_html + js_code_v2
-
-# Save to file
-with open('/mnt/kimi/output/index.html', 'w', encoding='utf-8') as f:
-    f.write(full_html_v2)
-
-print(f"✅ COMPLETE! Enhanced City of Syndicates v2.0 saved!")
-print(f"Total size: {len(full_html_v2):,} characters")
-print(f"File location: /mnt/kimi/output/index.html")
-print("\n🎮 NEW FEATURES ADDED:")
-print("  • 8 Crimes (was 4)")
-print("  • 12 Jobs (was 4)")
-print("  • 10 Weapons (was 3)")
-print("  • 8 Armor pieces (was 2)")
-print("  • 8 Street Drugs with buy/sell")
-print("  • 6 Contraband items")
-print("  • 6 Information goods")
-print("  • 8 Stocks with live simulation")
-print("  • 11 Quests (Daily/Weekly/Story)")
-print("  • PvP Combat Visualization")
-print("  • Tab-specific banner images")
-print("  • Animated character model")
-print("  • Portfolio tracking")
-print("  • Black Market trading")
-
+</html>
