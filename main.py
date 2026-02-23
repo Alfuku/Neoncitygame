@@ -252,12 +252,15 @@ Base.metadata.create_all(bind=engine)
 # =========================
 app = FastAPI(title="City of Syndicates API")
 
+# Add this RIGHT AFTER creating your FastAPI app
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
 )
+
 
 
 # =========================
@@ -1265,5 +1268,6 @@ def admin_reset_player(data: AdminResetIn, db: Session = Depends(get_db)):
     ensure_player_quests(p, db)
 
     return {"message": "Player reset", "player": player_public(p), "avatar": avatar_snapshot(p)}
+
 
 
