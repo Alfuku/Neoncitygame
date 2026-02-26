@@ -31,6 +31,7 @@ JWT_SECRET = os.getenv("JWT_SECRET", "dev-secret-change-me")
 JWT_ALG = "HS256"
 
 ADMIN_KEY = os.getenv("ADMIN_KEY", "dev-admin-key-change-me")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
 engine = create_engine(
     DATABASE_URL,
@@ -251,11 +252,10 @@ Base.metadata.create_all(bind=engine)
 # FASTAPI APP
 # =========================
 app = FastAPI(title="City of Syndicates API")
-
 # Add this RIGHT AFTER creating your FastAPI app
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
+    allow_origins=[FRONTEND_URL],  # Allows all origins
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
@@ -1268,6 +1268,7 @@ def admin_reset_player(data: AdminResetIn, db: Session = Depends(get_db)):
     ensure_player_quests(p, db)
 
     return {"message": "Player reset", "player": player_public(p), "avatar": avatar_snapshot(p)}
+
 
 
 
