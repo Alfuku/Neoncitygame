@@ -563,6 +563,10 @@ class AdminResetIn(BaseModel):
 # =========================
 # PUBLIC / AUTH
 # =========================
+@app.get("/")
+def root():
+    return {"message": "City of Syndicates backend is alive"}
+
 @app.get("/health")
 def health():
     return {"ok": True}
@@ -1268,6 +1272,7 @@ def admin_reset_player(data: AdminResetIn, db: Session = Depends(get_db)):
     ensure_player_quests(p, db)
 
     return {"message": "Player reset", "player": player_public(p), "avatar": avatar_snapshot(p)}
+
 
 
 
